@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  form(id="formUserProfile", method="post", action="")
+    label(for="Email") Email
+    input(type="email", name="Email", id="Email")
+    input(type="submit", value="#{buttonText}")
+  p Or new users can
+    a(href="/user/new") Sign up

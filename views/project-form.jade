@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  form(id="formProjectProfile", method="post", action="")
+    label(for="ProjectName") Project Name
+    input(type="text", name="ProjectName", id="ProjectName")
+    label(for="Tasks") Tasks
+    input(type="text", name="Tasks", id="Tasks")
+    input(type="submit", value="#{buttonText}")
