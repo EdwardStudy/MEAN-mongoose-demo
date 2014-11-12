@@ -1,0 +1,18 @@
+{
+	"id":                5,
+	"name":              "晚上干嘛？",
+	"type":              "decision",
+	"change":            null,
+	"markov_info":       null,
+	"variable":          null,
+	"tracker":           null,
+	"payoff":            null,
+	"compiled_prob":     null,
+	"compiled_variable": null,
+	"compiled_tracker":  null,
+	"compiled_payoff":   null,
+	"parsed_prob":       null,
+	"parsed_variable":   null,
+	"parsed_tracker":    null,
+	"parsed_payoff":     null
+}

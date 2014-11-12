@@ -5,6 +5,8 @@ var Project = mongoose.model('Project');
 exports.create = function(req, res){
 	res.render('project-form', {
 		title: 'Create project',
+		name: "",
+		tasks: "",
 		buttonText: 'Create!'
 	});	
 };
@@ -77,4 +79,49 @@ exports.displayInfo = function(req, res){
 			res.redirect('/user');
 		}
 	}
+};
+
+//GET project edit form
+exports.edit = function(req, res){
+	if(req.session.loggedIn !== true){
+		res.redirect('/login');
+	}else{
+		Project.findById(req.params.id, function(err, project){
+			res.render('project-form', {
+				title: 'Edit profiled',
+				_id: req.params.id,
+				name: project.name,
+				tasks: project.tasks,
+				buttonText: "Save"
+			});			
+		});
+
+	}
+};
+
+//POST project edit form
+exports.doEdit = function(req, res){
+	//Find user by id held in the session
+	if(req.params.id){
+		Project.findById(req.params.id, function(err, project){
+			if(err){
+				console.console.log(err);
+				res.redirect('/project?error=finding');
+			}else{
+				//Change the name and tasks to the values sent in the form
+				project.name = req.body.ProjectName;
+				project.tasks = req.body.Tasks;
+				//Save the change
+				project.save(function(err){
+					if(!err){
+						console.log('Project updated:' + req.body.FullName);
+						res.redirect('/project/:id');
+					}else{
+						console.console.log(err);
+						res.redirect('/project?error=finding');
+					}
+				});
+			}
+		});
+	}//GET已经做判断
 };

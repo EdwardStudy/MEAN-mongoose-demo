@@ -4,7 +4,7 @@ block content
   h1= title
   form(id="formProjectProfile", method="post", action="")
     label(for="ProjectName") Project Name
-    input(type="text", name="ProjectName", id="ProjectName")
+    input(type="text", name="ProjectName", id="ProjectName" value="#{name}")
     label(for="Tasks") Tasks
-    input(type="text", name="Tasks", id="Tasks")
+    input(type="text", name="Tasks", id="Tasks" value="#{tasks}")
     input(type="submit", value="#{buttonText}")

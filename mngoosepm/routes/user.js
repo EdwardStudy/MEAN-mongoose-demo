@@ -19,6 +19,8 @@ exports.index = function(req, res){
 exports.create = function(req, res){
 	res.render('user-form', {
 		title: 'Create user',
+		name: "",
+		email: "",
 		buttonText: 'Join!'
 	});
 };
@@ -71,6 +73,14 @@ exports.doLogin = function(req, res){
 					};
 					req.session.loggedIn = true;
 					console.log("Logged in user: " + user);
+					//tracking user login
+					User.update(
+						{_id: user._id},
+						{$set: {lastLogin: Date.now()}}, //'lastLogin' is not original document
+						function(){
+							res.redirect('/user');
+						}
+					);
 					res.redirect('/user');
 				}
 			}else{
@@ -80,4 +90,49 @@ exports.doLogin = function(req, res){
 	}else{
 		res.redirect('/login?404=error');
 	}
+};
+
+//GET user edit form
+exports.edit = function(req, res){
+	if(req.session.loggedIn !== true){
+		res.redirect('/login');
+	}else{
+		res.render('user-form', {
+			title: 'Edit profiled',
+			_id: req.session.user._id,
+			name: req.session.user.name,
+			email: req.session.user.email,
+			buttonText: "Save"
+		});
+	}
+};
+
+//POST user edit form
+exports.doEdit = function(req, res){
+	//Find user by id held in the session
+	if(req.session.user._id){
+		User.findById(req.session.user._id, function(err, user){
+			if(err){
+				console.console.log(err);
+				res.redirect('/user?error=finding');
+			}else{
+				//Change the name and email to the values sent in the form
+				user.name = req.body.FullName;
+				user.email = req.body.Email;
+				user.modifiedOn = Date.new();
+				//Save the change
+				user.save(function(err){
+					if(!err){
+						console.log('User updated:' + req.body.FullName);
+						req.session.user.name = req.body.FullName;
+						req.session.user.email = req.body.Email;
+						res.redirect('/user');
+					}else{
+						console.console.log(err);
+						res.redirect('/user?error=finding');
+					}
+				});
+			}
+		});
+	}//GET已经做判断
 };

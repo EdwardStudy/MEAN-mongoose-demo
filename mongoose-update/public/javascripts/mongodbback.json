@@ -1,0 +1,279 @@
+{
+    "_id" : ObjectId("54608876bae342f81d227dab"),
+    "name" : "Type00",
+    "structure" : [ 
+        {
+            "id" : 1,
+            "name" : "晚上干嘛？",
+            "type" : "decision",
+            "change" : null,
+            "markov_info" : null,
+            "variable" : null,
+            "tracker" : null,
+            "payoff" : null,
+            "compiled_prob" : null,
+            "compiled_variable" : null,
+            "compiled_tracker" : null,
+            "compiled_payoff" : null,
+            "parsed_prob" : null,
+            "parsed_variable" : null,
+            "parsed_tracker" : null,
+            "parsed_payoff" : null,
+            "children" : [ 
+                {
+                    "id" : 3,
+                    "name" : "晚上干嘛？",
+                    "type" : "decision",
+                    "change" : null,
+                    "markov_info" : null,
+                    "variable" : null,
+                    "tracker" : null,
+                    "payoff" : null,
+                    "compiled_prob" : null,
+                    "compiled_variable" : null,
+                    "compiled_tracker" : null,
+                    "compiled_payoff" : null,
+                    "parsed_prob" : null,
+                    "parsed_variable" : null,
+                    "parsed_tracker" : null,
+                    "parsed_payoff" : null
+                }
+            ]
+        }, 
+        {
+            "id" : 2,
+            "name" : "晚上干嘛？",
+            "type" : "decision",
+            "change" : null,
+            "markov_info" : null,
+            "variable" : null,
+            "tracker" : null,
+            "payoff" : null,
+            "compiled_prob" : null,
+            "compiled_variable" : null,
+            "compiled_tracker" : null,
+            "compiled_payoff" : null,
+            "parsed_prob" : null,
+            "parsed_variable" : null,
+            "parsed_tracker" : null,
+            "parsed_payoff" : null
+        }
+    ],
+    "parameter" : [ 
+        {
+            "pid" : 1,
+            "name" : "pDateSuccess",
+            "formula" : "10%",
+            "category" : "probability",
+            "display" : true,
+            "description" : "泡妞成功的可能性",
+            "_id" : ObjectId("54608876bae342f81d227dbf")
+        }, 
+        {
+            "pid" : 2,
+            "name" : "pDate",
+            "formula" : "30%",
+            "category" : "probability",
+            "display" : true,
+            "description" : "约会的可能性",
+            "_id" : ObjectId("54608876bae342f81d227dbe")
+        }, 
+        {
+            "pid" : 3,
+            "name" : "pDinning",
+            "formula" : "",
+            "category" : "probability",
+            "display" : true,
+            "description" : "喝酒的可能性",
+            "_id" : ObjectId("54608876bae342f81d227dbd")
+        }, 
+        {
+            "pid" : 4,
+            "name" : "cDate",
+            "formula" : "cKTV+cGift",
+            "category" : "cost",
+            "display" : true,
+            "description" : "约会开销",
+            "_id" : ObjectId("54608876bae342f81d227dbc")
+        }, 
+        {
+            "pid" : 5,
+            "name" : "cKTV",
+            "formula" : "",
+            "category" : "cost",
+            "display" : true,
+            "description" : "唱K开销",
+            "_id" : ObjectId("54608876bae342f81d227dbb")
+        }, 
+        {
+            "pid" : 6,
+            "name" : "cGift",
+            "formula" : "",
+            "category" : "cost",
+            "display" : true,
+            "description" : "给女生的小礼物",
+            "_id" : ObjectId("54608876bae342f81d227dba")
+        }, 
+        {
+            "pid" : 7,
+            "name" : "cDateSuccess",
+            "formula" : "dis_cDateSuccess",
+            "category" : "cost",
+            "display" : true,
+            "description" : "约会成功的后续开销",
+            "_id" : ObjectId("54608876bae342f81d227db9")
+        }, 
+        {
+            "pid" : 8,
+            "name" : "cDateFail",
+            "formula" : "0",
+            "category" : "cost",
+            "display" : true,
+            "description" : "约会失败的后续开销",
+            "_id" : ObjectId("54608876bae342f81d227db8")
+        }, 
+        {
+            "pid" : 9,
+            "name" : "cShopping",
+            "formula" : "pClothesbuying*cClothes",
+            "category" : "cost",
+            "display" : true,
+            "description" : "逛街开销",
+            "_id" : ObjectId("54608876bae342f81d227db7")
+        }, 
+        {
+            "pid" : 10,
+            "name" : "cClothes",
+            "formula" : "dis_Clothes",
+            "category" : "cost",
+            "display" : true,
+            "description" : "衣服价格",
+            "_id" : ObjectId("54608876bae342f81d227db6")
+        }, 
+        {
+            "pid" : 11,
+            "name" : "pClothesbuying",
+            "formula" : "32%",
+            "category" : "probability",
+            "display" : true,
+            "description" : "买衣服可能性",
+            "_id" : ObjectId("54608876bae342f81d227db5")
+        }, 
+        {
+            "pid" : 12,
+            "name" : "cDinning",
+            "formula" : "200",
+            "category" : "cost",
+            "display" : true,
+            "description" : "跟哥们吃饭的开销",
+            "_id" : ObjectId("54608876bae342f81d227db4")
+        }, 
+        {
+            "pid" : 13,
+            "name" : "cStudy",
+            "formula" : "0",
+            "category" : "cost",
+            "display" : true,
+            "description" : "上自习的开销",
+            "_id" : ObjectId("54608876bae342f81d227db3")
+        }, 
+        {
+            "pid" : 14,
+            "name" : "cDOTA",
+            "formula" : "10",
+            "category" : "cost",
+            "display" : true,
+            "description" : "网吧的开销",
+            "_id" : ObjectId("54608876bae342f81d227db2")
+        }, 
+        {
+            "pid" : 15,
+            "name" : "uDateSuccess",
+            "formula" : "10",
+            "category" : "happiness",
+            "display" : true,
+            "description" : "泡妞成功的心情",
+            "_id" : ObjectId("54608876bae342f81d227db1")
+        }, 
+        {
+            "pid" : 17,
+            "name" : "uDateFail",
+            "formula" : "1",
+            "category" : "happiness",
+            "display" : true,
+            "description" : "泡妞失败的心情",
+            "_id" : ObjectId("54608876bae342f81d227db0")
+        }, 
+        {
+            "pid" : 18,
+            "name" : "uShopping",
+            "formula" : "5",
+            "category" : "happiness",
+            "display" : true,
+            "description" : "陪妞逛街的心情",
+            "_id" : ObjectId("54608876bae342f81d227daf")
+        }, 
+        {
+            "pid" : 19,
+            "name" : "uDinning",
+            "formula" : "6",
+            "category" : "happiness",
+            "display" : true,
+            "description" : "和哥们吃饭的心情",
+            "_id" : ObjectId("54608876bae342f81d227dae")
+        }, 
+        {
+            "pid" : 20,
+            "name" : "uStudy",
+            "formula" : "4",
+            "category" : "happiness",
+            "display" : true,
+            "description" : "上自习的心情",
+            "_id" : ObjectId("54608876bae342f81d227dad")
+        }, 
+        {
+            "pid" : 21,
+            "name" : "uDOTA",
+            "formula" : "6",
+            "category" : "happiness",
+            "display" : true,
+            "description" : "玩DOTA的心情",
+            "_id" : ObjectId("54608876bae342f81d227dac")
+        }
+    ],
+    "config" : {
+        "name" : "王二狗的决策树",
+        "description" : "关于今晚干什么的人生重大决定",
+        "security_level" : "private",
+        "layout_style" : "white-print",
+        "depth" : 4,
+        "show_title" : true,
+        "show_info" : true,
+        "show_default_info" : true,
+        "show_compiled_info" : true,
+        "show_parsed_info" : true,
+        "show_variable" : true,
+        "show_tracker" : true,
+        "show_payoff" : true,
+        "layer_width" : [ 
+            {
+                "width" : 300,
+                "_id" : ObjectId("54608876bae342f81d227dc3")
+            }, 
+            {
+                "width" : 220,
+                "_id" : ObjectId("54608876bae342f81d227dc2")
+            }, 
+            {
+                "width" : 220,
+                "_id" : ObjectId("54608876bae342f81d227dc1")
+            }, 
+            {
+                "width" : 234,
+                "_id" : ObjectId("54608876bae342f81d227dc0")
+            }
+        ],
+        "last_saved" : ISODate("2014-07-10T01:10:53.000Z")
+    },
+    "__v" : 2
+}

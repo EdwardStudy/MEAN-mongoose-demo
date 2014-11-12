@@ -1,0 +1,197 @@
+{
+	"name": "Type00",
+	"config" : {
+		"name":               "王二狗的决策树",
+		"description":        "关于今晚干什么的人生重大决定",
+		"last_saved":         "07/10/2014 09:10:53",
+		"security_level":     "private",
+		"layout_style":       "white-print",
+
+		"depth":              4,
+		"layer_width":        [
+			{
+				"width": 300
+			}, 
+			{
+				"width": 220
+			},
+			{
+				"width": 220
+			},
+			{
+				"width": 234
+			}
+		],
+
+		"show_title":         true,
+		"show_info":          true,
+		"show_default_info":  true,
+		"show_compiled_info": true,
+		"show_parsed_info":   true,
+		"show_variable":      true,
+		"show_tracker":       true,
+		"show_payoff":        true
+	},
+	"parameter": [
+		{
+			"pid": 1,
+			"name":        "pDateSuccess",
+			"formula":     "10%",
+			"category":    "probability",
+			"display":     true,
+			"description": "泡妞成功的可能性"
+		},
+		{
+			"pid": 2,
+			"name":        "pDate",
+			"formula":     "30%",
+			"category":    "probability",
+			"display":     true,
+			"description": "约会的可能性"
+		},
+		{
+			"pid": 3,
+			"name":        "pDinning",
+			"formula":     null,
+			"category":    "probability",
+			"display":     true,
+			"description": "喝酒的可能性"
+		},
+		{
+			"pid": 4,
+			"name":        "cDate",
+			"formula":     "cKTV+cGift",
+			"category":    "cost",
+			"display":     true,
+			"description": "约会开销"
+		},
+		{
+			"pid": 5,
+			"name":        "cKTV",
+			"formula":     null,
+			"category":    "cost",
+			"display":     true,
+			"description": "唱K开销"
+		},
+		{
+			"pid": 6,
+			"name":        "cGift",
+			"formula":     null,
+			"category":    "cost",
+			"display":     true,
+			"description": "给女生的小礼物"
+		},
+		{
+			"pid": 7,
+			"name":        "cDateSuccess",
+			"formula":     "dis_cDateSuccess",
+			"category":    "cost",
+			"display":     true,
+			"description": "约会成功的后续开销"
+		},
+		{
+			"pid": 8,
+			"name":        "cDateFail",
+			"formula":     "0",
+			"category":    "cost",
+			"display":     true,
+			"description": "约会失败的后续开销"
+		},
+		{
+			"pid": 9,
+			"name":        "cShopping",
+			"formula":     "pClothesbuying*cClothes",
+			"category":    "cost",
+			"display":     true,
+			"description": "逛街开销"
+		},
+		{
+			"pid": 10,
+			"name":        "cClothes",
+			"formula":     "dis_Clothes",
+			"category":    "cost",
+			"display":     true,
+			"description": "衣服价格"
+		},
+		{
+			"pid": 11,
+			"name":        "pClothesbuying",
+			"formula":     "32%",
+			"category":    "probability",
+			"display":     true,
+			"description": "买衣服可能性"
+		},
+		{
+			"pid": 12,
+			"name":        "cDinning",
+			"formula":     "200",
+			"category":    "cost",
+			"display":     true,
+			"description": "跟哥们吃饭的开销"
+		},
+		{
+			"pid": 13,
+			"name":        "cStudy",
+			"formula":     "0",
+			"category":    "cost",
+			"display":     true,
+			"description": "上自习的开销"
+		},
+		{
+			"pid": 14,
+			"name":        "cDOTA",
+			"formula":     "10",
+			"category":    "cost",
+			"display":     true,
+			"description": "网吧的开销"
+		},
+		{
+			"pid": 15,
+			"name":        "uDateSuccess",
+			"formula":     "10",
+			"category":    "happiness",
+			"display":     true,
+			"description": "泡妞成功的心情"
+		},
+		{
+			"pid": 17,
+			"name":        "uDateFail",
+			"formula":     "1",
+			"category":    "happiness",
+			"display":     true,
+			"description": "泡妞失败的心情"
+		},
+		{
+			"pid": 18,
+			"name":        "uShopping",
+			"formula":     "5",
+			"category":    "happiness",
+			"display":     true,
+			"description": "陪妞逛街的心情"
+		},
+		{
+			"pid": 19,
+			"name":        "uDinning",
+			"formula":     "6",
+			"category":    "happiness",
+			"display":     true,
+			"description": "和哥们吃饭的心情"
+		},
+		{
+			"pid": 20,
+			"name":        "uStudy",
+			"formula":     "4",
+			"category":    "happiness",
+			"display":     true,
+			"description": "上自习的心情"
+		},
+		{
+			"pid": 21,
+			"name":        "uDOTA",
+			"formula":     "6",
+			"category":    "happiness",
+			"display":     true,
+			"description": "玩DOTA的心情"
+		}
+	]
+}

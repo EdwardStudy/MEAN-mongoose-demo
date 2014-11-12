@@ -1,0 +1,448 @@
+/**
+ * decisionTree数据模型复杂版
+ * 通过Demo的DTree-structure.json得出的结构
+ */
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var DecisiontreeSchema = new Schema({
+	config: {
+		name: { type: String },
+		description: { type: String },
+		last_saved: { type: Date, Date.now}, //how to set a Data
+		security_level: { type: String },
+		layout_style: { type: String },
+		depth: { type: Number },
+		layer_width: [{
+
+		}], //Number
+		show_title: { type: Boolean },
+		show_info: { type: Boolean },
+		show_default_info: { type: Boolean },
+		show_compiled_info: { type: Boolean },
+		show_parsed_info: { type: Boolean },
+		show_variable: { type: Boolean },
+		show_tracker: { type: Boolean },
+		show_payoff: { type: Boolean }
+	},
+	parameter:  [{
+		pid: { type: Number },
+		name: { type: String },
+		formula: { type: String },
+		category: { type: String },
+		display: { type: Boolean },
+		description: { type: String }
+	}],
+	structure: {
+		id: { type: Number },
+		name: { type: String },
+		type: { type: String },
+		change: { type: String }, //此两项的类型未知
+		markov_info: { type: String },
+		variable: [{
+			pid: { type: Number },
+			name: { type: String },
+			formula: { type: String },
+			category: { type: String },
+			display: { type: Boolean },
+			description: { type: String }
+		}],
+		tracker: { type: String },
+		payoff: { type: String },
+		compiled_prob: { type: String },
+		compiled_variable: { type: String },
+		compiled_tracker: { type: String },
+		compiled_payoff: { type: String },
+		parsed_prob: { type: String },
+		parsed_variable: { type: String },
+		parsed_tracker: { type: String },
+		parsed_payoff: { type: String },
+		children: [//第一个children数组
+		{
+			id: { type: Number },
+			name: { type: String },
+			type: { type: String },
+			change: { type: Boolean },
+			markov_info:,
+			variable: [{
+				pid: { type: Number },
+				name: { type: String },
+				formula: { type: String },
+				category: { type: String },
+				display: { type: Boolean },
+				description: { type: String }
+			}],
+			tracker: { type: String },
+			payoff: { type: String },
+			compiled_prob: { type: String },
+			compiled_variable: { type: String },
+			compiled_tracker: { type: String },
+			compiled_payoff: { type: String },
+			parsed_prob: { type: String },
+			parsed_variable: { type: String },
+			parsed_tracker: { type: String },
+			parsed_payoff: { type: String },
+			children: [{ //第二个children数组
+				id: { type: Number },
+				name: { type: String },
+				type: { type: String },
+				change: { type: Boolean },
+				markov_info:,
+				variable: [{
+					pid: { type: Number },
+					name: { type: String },
+					formula: { type: String },
+					category: { type: String },
+					display: { type: Boolean },
+					description: { type: String }
+				}],
+				tracker: { type: String },
+				payoff: { type: String },
+				compiled_prob: { type: String },
+				compiled_variable: { type: String },
+				compiled_tracker: { type: String },
+				compiled_payoff: { type: String },
+				parsed_prob: { type: String },
+				parsed_variable: { type: String },
+				parsed_tracker: { type: String },
+				parsed_payoff: { type: String },
+				children: [{ //第三个children数组
+					id: { type: Number },
+					name: { type: String },
+					type: { type: String },
+					change: { type: Boolean },
+					markov_info:,
+					variable: [{
+						pid: { type: Number },
+						name: { type: String },
+						formula: { type: String },
+						category: { type: String },
+						display: { type: Boolean },
+						description: { type: String }
+					}],
+					tracker: { type: String },
+					payoff: { type: String },
+					compiled_prob: { type: String },
+					compiled_variable: { type: String },
+					compiled_tracker: { type: String },
+					compiled_payoff: { type: String },
+					parsed_prob: { type: String },
+					parsed_variable: { type: String },
+					parsed_tracker: { type: String },
+					parsed_payoff: { type: String },
+					children: [{ //第四个children数组
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层							
+					}],//第四层childern结束，_childern复制一样的结构
+					_children: [{
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层	
+					}]
+				}],	//第三层childern结束，_childern复制一样的结构
+				_children[{
+					id: { type: Number },
+					name: { type: String },
+					type: { type: String },
+					change: { type: Boolean },
+					markov_info:,
+					variable: [{
+						pid: { type: Number },
+						name: { type: String },
+						formula: { type: String },
+						category: { type: String },
+						display: { type: Boolean },
+						description: { type: String }
+					}],
+					tracker: { type: String },
+					payoff: { type: String },
+					compiled_prob: { type: String },
+					compiled_variable: { type: String },
+					compiled_tracker: { type: String },
+					compiled_payoff: { type: String },
+					parsed_prob: { type: String },
+					parsed_variable: { type: String },
+					parsed_tracker: { type: String },
+					parsed_payoff: { type: String },
+					children: [{ //第四个children数组
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层							
+					}],//第四层childern结束，_childern复制一样的结构
+					_children: [{
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层	
+					}]
+				}]			
+			}],	//第二层childern结束，_childern复制一样的结构
+			_children[{
+				id: { type: Number },
+				name: { type: String },
+				type: { type: String },
+				change: { type: Boolean },
+				markov_info:,
+				variable: [{
+					pid: { type: Number },
+					name: { type: String },
+					formula: { type: String },
+					category: { type: String },
+					display: { type: Boolean },
+					description: { type: String }
+				}],
+				tracker: { type: String },
+				payoff: { type: String },
+				compiled_prob: { type: String },
+				compiled_variable: { type: String },
+				compiled_tracker: { type: String },
+				compiled_payoff: { type: String },
+				parsed_prob: { type: String },
+				parsed_variable: { type: String },
+				parsed_tracker: { type: String },
+				parsed_payoff: { type: String },
+				children: [{ //第三个children数组
+					id: { type: Number },
+					name: { type: String },
+					type: { type: String },
+					change: { type: Boolean },
+					markov_info:,
+					variable: [{
+						pid: { type: Number },
+						name: { type: String },
+						formula: { type: String },
+						category: { type: String },
+						display: { type: Boolean },
+						description: { type: String }
+					}],
+					tracker: { type: String },
+					payoff: { type: String },
+					compiled_prob: { type: String },
+					compiled_variable: { type: String },
+					compiled_tracker: { type: String },
+					compiled_payoff: { type: String },
+					parsed_prob: { type: String },
+					parsed_variable: { type: String },
+					parsed_tracker: { type: String },
+					parsed_payoff: { type: String },
+					children: [{ //第四个children数组
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层							
+					}],//第四层childern结束，_childern复制一样的结构
+					_children: [{
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层	
+					}]
+				}],	//第三层childern结束，_childern复制一样的结构
+				_children[{
+					id: { type: Number },
+					name: { type: String },
+					type: { type: String },
+					change: { type: Boolean },
+					markov_info:,
+					variable: [{
+						pid: { type: Number },
+						name: { type: String },
+						formula: { type: String },
+						category: { type: String },
+						display: { type: Boolean },
+						description: { type: String }
+					}],
+					tracker: { type: String },
+					payoff: { type: String },
+					compiled_prob: { type: String },
+					compiled_variable: { type: String },
+					compiled_tracker: { type: String },
+					compiled_payoff: { type: String },
+					parsed_prob: { type: String },
+					parsed_variable: { type: String },
+					parsed_tracker: { type: String },
+					parsed_payoff: { type: String },
+					children: [{ //第四个children数组
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层							
+					}],//第四层childern结束，_childern复制一样的结构
+					_children: [{
+						id: { type: Number },
+						name: { type: String },
+						type: { type: String },
+						change: { type: Boolean },
+						markov_info:,
+						variable: [{
+							pid: { type: Number },
+							name: { type: String },
+							formula: { type: String },
+							category: { type: String },
+							display: { type: Boolean },
+							description: { type: String }
+						}],
+						tracker: { type: String },
+						payoff: { type: String },
+						compiled_prob: { type: String },
+						compiled_variable: { type: String },
+						compiled_tracker: { type: String },
+						compiled_payoff: { type: String },
+						parsed_prob: { type: String },
+						parsed_variable: { type: String },
+						parsed_tracker: { type: String },
+						parsed_payoff: { type: String }
+						//以后添加node需在插入children: [{}]同时插入_childrem[{}]为第五层	
+					}]
+				}]		
+			}]	
+		}],//第一层childern结束，_childern复制一样的结构
+		_children: [{}]
+	}
+});
+
+module.exports = mongoose.model('Decisiontree', DecisiontreeSchema);

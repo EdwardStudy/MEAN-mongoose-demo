@@ -1,0 +1,22 @@
+<% include header.html %>
+	<h1>Welcome to <%= title %></h1>
+	<ul>
+		<li>
+		    <p><a href="/dtree/add">添加dtree</a></p>
+		</li>
+		<li>
+			<p><a href='/dtree/<%= name %>'>修改dtree</a></p>
+		</li>
+		<li>
+			<p><a href="/changestructure/<%= name %>">添加新的结点</a></p>
+		</li>
+		<li>
+			<p><a href="/createchildren/<%= name %>">添加子节点</a></p>
+		</li>
+		<li>
+			<p><a href="/dtree/json/<%= name %>">输出json</a></p>
+		</li>
+    </ul>
+
+    
+<% include footer.html %>
