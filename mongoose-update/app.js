@@ -19,17 +19,8 @@ var store = new sessionStore({
     url: "mongodb://localhost/session",
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
-// var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser');
 
 var ejs = require('ejs');
-
-
-//var Dtree = require('./models/DTree');
-
-
-
 
 var app = express();
 
@@ -52,6 +43,7 @@ store: store,
 cookie: { maxAge: 900000 }
 }));
 
+
 app.use(function(req, res, next){
   //res.locals.user = req.session.user;
   var err = req.session.error;
@@ -70,19 +62,9 @@ app.get('/users', users.list);
 
 app.get('/dtree/add', dTrees.dTreeAdd);//增加
 app.post('/dtree/add', dTrees.doDTreeAdd);//提交
+app.get('/dtree/deserialize', dTrees.deserialize);//反序列化
+app.get('/dtree/serialize', dTrees.doSerialize);//序列化
 app.get('/dtree/:name', dTrees.dTreeAdd);//编辑查询
-
-app.get('/changestructure/:name', dTrees.dtreeStructure); //修改dtreestructure， 添加新children
-app.post('/changestructure/:name', dTrees.createDtreeStructure);
-app.get('/createchildren/:name', dTrees.dtreeChildren);
-app.post('/createchildren/:name', dTrees.createDtreeChildren);
-app.get('/dtree/json/:name', dTrees.dTreeJSON);//JSON数据
-
-//自动化
-// var models_path = __dirname + './models'
-// fs.readdirSync(models_path).forEach(function (file) {
-//   if (~file.indexOf('.js')) require(models_path + '/' + file)
-// })
 
 app.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

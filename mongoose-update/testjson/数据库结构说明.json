@@ -1,0 +1,82 @@
+//一个决策树用一个文档(行)来保存; 所有决策树文档都存储在dtrees集合（表）中。
+//每个决策树的结构，包含6个部分：
+// config,
+// node_array,
+// param_array,
+// category_array
+// table_array
+// distribution_array
+//（删除了tree_id，改用mongodb自动设置的_id来标识每个决策树文档）
+// (实例中不包含mongodb自动设置的_id, __v等私有属性)
+//以下是一个决策树文档的最简实例：
+
+{
+	"config":  { //config,用于存储决策树的一般配置信息
+		"name":            "我的决策树",                    //名称
+		"description":     "用来负责说明决策树结构",         //对决策树的介绍，由用户输入
+		"create_time":     "07/10/2014 09:10:53 135Z",          //首次创建的时间
+		"last_saved_time": "07/10/2014 09:10:53 135Z",     //最近一次修改时间
+
+		"security_level": "private",     //安全等级，有私有，保护，完全公开三种模式
+		"layout_style":   "white-print", //决策树的主题样式
+
+		"layer_width_array": [300], //决策树每一层的宽度(单位px)，这个数组的长度即树的深度
+
+		"show_title":    true,  //是否显示每一个节点的标题
+		"show_info":     true,  //是否显示每一个节点的info（就是各种变量信息）
+		"show_variable": true,  //是否显示每一个节点的变量
+		"show_tracker":  true,  //是否显示每一个节点的追踪值
+		"show_payoff":   true   //是否显示每一个节点的反馈值
+	},
+
+	"node_array": [ //node_array， 节点信息，以对象数组方式存放
+		{
+			"node_id":               1,  //节点id,
+			"parent_id":             null, //父节点ID，根节点此值为空
+			"node_path_array":       [],   //节点路径
+			"name":                  "", //节点名称,
+			"tip":                   "", //节点小贴士
+			"type":                  "decision",//节点类型
+			"markov_info":           null, //存马尔科夫信息的，暂时无用
+			"show_child":            true, //此节点的子树是否折叠起来的标志
+			"prob":                  "12.5%",//节点概率
+			"redefined_param_array": [
+				{
+					"param_id": 1,
+					"formula":  "15%"
+				}
+			], //定义在节点上的相关变量
+			"tracker_array":         [
+
+			], //节点追踪值
+			"payoff_array":          [
+				{
+					"payoff_name":   "cost",
+					"payoff_fomula": "cTaxi+ cBag"
+				}
+			] //节点收益
+		}
+	],
+	"param_array": [ //param_array，变量，以对象数组方式存放
+			"param_id":    1,  //变量ID
+			"name":        "pDateSuccess", //变量名称
+			"formula":     "10%", //变量的公式
+			"category":    2, //变量的类别，类别可由用户定义，用于区别变量
+			"display":     true,  //是否显示出来
+			"description": "泡妞成功的可能性", //变量的描述，由用户自己输入
+			"comment":     "很有可能" //用户输入的备注信息
+		}
+	],
+
+	"category_array": [ //category_array，变量分类目录，以对象数组方式存放，
+		{
+			"category_id": 2,  //变量ID
+			"name":        "probability", //目录名称
+			"description": "" //目录描述
+		}
+	],
+
+	"table_array": [],  //table_array，表格，以对象数组方式存放，具体内容未来补充
+	"distribution_array": [] //distribution_array, 分布，以对象数组方式存放，具体内容未来补充
+}
+

@@ -73,17 +73,29 @@ exports.doLogin = function(req, res){
 					};
 					req.session.loggedIn = true;
 					console.log("Logged in user: " + user);
-					//tracking user login
+					console.log("Session = " + req.session.loggedIn);
+					//tracking user login by a document 'lastLogin'
 					User.update(
 						{_id: user._id},
-						{$set: {lastLogin: Date.now()}}, //'lastLogin' is not original document
-						function(){
-							res.redirect('/user');
-						}
-					);
+						{$set: {lastLogin: Date.now()}}).exec();
+						//function(err, numberAffected, raw){
+						//	console.log('Test1 session ' + req.session.loggedIn);
+						//	//Use $set 'lastLogin' to add db
+						//	//First add, second change
+						//	if(!err){
+                        //
+						//		res.redirect('/user');
+						//	}else{
+						//		console.log("Something wrong: " + err );
+						//	}
+                        //
+						//}
 					res.redirect('/user');
+					console.log('Test2 session ' + req.session.loggedIn);
+					//res.redirect('/user');
 				}
 			}else{
+				console.log("Something wrong: " + err );
 				res.redirect('/login?404=error');
 			}			
 		});

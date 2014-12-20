@@ -1,0 +1,623 @@
+{
+  "_id": "548d8f9376f0b6841c35113f",
+  "payoff_array": [
+    {
+      "payoff_id": 1,
+      "payoff_name": "cost",
+      "payoff_weight": 1,
+      "_id": "548d8f9376f0b6841c351141"
+    },
+    {
+      "payoff_id": 2,
+      "payoff_name": "happiness",
+      "payoff_weight": 1000,
+      "_id": "548d8f9376f0b6841c351140"
+    }
+  ],
+  "distribution_array": [
+    {
+      "distr_id": 1,
+      "name": "Dis_uBag_bought",
+      "type": "beta",
+      "description": "Distribution of happiness lvl for buying a bag",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351153",
+      "value": [
+        8,
+        4
+      ]
+    }
+  ],
+  "table_array": [
+    {
+      "table_id": 1,
+      "name": "cFood_and_drink",
+      "description": "cost table for food and drink",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351154",
+      "value": [
+        [
+          100,
+          300
+        ],
+        [
+          200,
+          400
+        ]
+      ]
+    }
+  ],
+  "param_category_array": [
+    {
+      "category_id": 1,
+      "name": "probability",
+      "description": "发生概率",
+      "_id": "548d8f9376f0b6841c351157"
+    },
+    {
+      "category_id": 2,
+      "name": "cost",
+      "description": "代价",
+      "_id": "548d8f9376f0b6841c351156"
+    },
+    {
+      "category_id": 3,
+      "name": "happiness",
+      "description": "幸福指数",
+      "_id": "548d8f9376f0b6841c351155"
+    }
+  ],
+  "param_array": [
+    {
+      "param_id": 1,
+      "name": "pDate_accepted",
+      "formula": "40%",
+      "category": 1,
+      "display": true,
+      "description": "泡妞成功的可能性",
+      "comment": "很有可能",
+      "_id": "548d8f9376f0b6841c35116e"
+    },
+    {
+      "param_id": 2,
+      "name": "pHave_time",
+      "formula": "",
+      "category": 1,
+      "display": true,
+      "description": "probability that buddies have time",
+      "comment": "很有可能",
+      "_id": "548d8f9376f0b6841c35116d"
+    },
+    {
+      "param_id": 3,
+      "name": "weekdays",
+      "formula": "1",
+      "category": null,
+      "display": true,
+      "description": "whether today is a weekday",
+      "comment": "‘1’ means weekday; ‘0’ means weekend",
+      "_id": "548d8f9376f0b6841c35116c"
+    },
+    {
+      "param_id": 4,
+      "name": "pDota",
+      "formula": "40%",
+      "category": 1,
+      "display": true,
+      "description": "probability of playing DOTA",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35116b"
+    },
+    {
+      "param_id": 5,
+      "name": "pDrink",
+      "formula": "1-pDota",
+      "category": 1,
+      "display": true,
+      "description": "",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35116a"
+    },
+    {
+      "param_id": 6,
+      "name": "cTaxi",
+      "formula": "100",
+      "category": 2,
+      "display": true,
+      "description": "cost of Taxi, depending on where you go",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351169"
+    },
+    {
+      "param_id": 7,
+      "name": "cBag",
+      "formula": "discount(2000; 2; disc_rate)",
+      "category": 2,
+      "display": true,
+      "description": "cost of designer bag",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351168"
+    },
+    {
+      "param_id": 8,
+      "name": "cMovie",
+      "formula": "80",
+      "category": 2,
+      "display": false,
+      "description": "cost of watching movie",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351167"
+    },
+    {
+      "param_id": 9,
+      "name": "uMovie",
+      "formula": "9",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl of watching movie",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351166"
+    },
+    {
+      "param_id": 10,
+      "name": "cKaraoke",
+      "formula": "300",
+      "category": 2,
+      "display": true,
+      "description": "cost of Karaoke",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351165"
+    },
+    {
+      "param_id": 11,
+      "name": "uKaraoke",
+      "formula": "10",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl of karaoke",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351164"
+    },
+    {
+      "param_id": 12,
+      "name": "uBag_bought",
+      "formula": "Dis_uBag_bought*10",
+      "category": 2,
+      "display": true,
+      "description": "happiness lvl of buying a bag",
+      "comment": "uncertain: follow a beta distribution",
+      "_id": "548d8f9376f0b6841c351163"
+    },
+    {
+      "param_id": 13,
+      "name": "uBag_not_bought",
+      "formula": "10",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl of not buying a bag",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351162"
+    },
+    {
+      "param_id": 14,
+      "name": "uDate_rejected",
+      "formula": "3",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl if date is rejected",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351161"
+    },
+    {
+      "param_id": 15,
+      "name": "uBuddy_no_time",
+      "formula": "4",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl if buddies does not have time",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351160"
+    },
+    {
+      "param_id": 16,
+      "name": "cNet_cafe",
+      "formula": "cPer_hour_rate*hours",
+      "category": 2,
+      "display": true,
+      "description": "cost of net cafe",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35115f"
+    },
+    {
+      "param_id": 17,
+      "name": "uDota",
+      "formula": "7",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl of palying dota",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35115e"
+    },
+    {
+      "param_id": 18,
+      "name": "cWine",
+      "formula": "cFood_and_drink[1,2]",
+      "category": 2,
+      "display": true,
+      "description": "cost of wine",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35115d"
+    },
+    {
+      "param_id": 19,
+      "name": "cFood",
+      "formula": "cFood_and_drink[1,1]",
+      "category": 2,
+      "display": true,
+      "description": "cost of food",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35115c"
+    },
+    {
+      "param_id": 20,
+      "name": "uDrink",
+      "formula": "8",
+      "category": 3,
+      "display": true,
+      "description": "happiness lvl of drinking wine",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35115b"
+    },
+    {
+      "param_id": 21,
+      "name": "hours",
+      "formula": "5",
+      "category": null,
+      "display": true,
+      "description": "hours of playing DOTA",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c35115a"
+    },
+    {
+      "param_id": 22,
+      "name": "cPer_hour_rate",
+      "formula": "6",
+      "category": 3,
+      "display": true,
+      "description": "per hour cost of Dota",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351159"
+    },
+    {
+      "param_id": 22,
+      "name": "disc_rate",
+      "formula": "3%",
+      "category": null,
+      "display": true,
+      "description": "yearly discount rate for bags",
+      "comment": "",
+      "_id": "548d8f9376f0b6841c351158"
+    }
+  ],
+  "node_array": {
+    "node_id": 1,
+    "parent_id": null,
+    "name": "what to do tonight",
+    "tip": "",
+    "type": "decision",
+    "show_child": true,
+    "prob": "",
+    "_id": "548d8f9376f0b6841c351152",
+    "children": [
+      {
+        "node_id": 2,
+        "parent_id": 1,
+        "name": "Date a girl",
+        "tip": "找女伴玩去",
+        "type": "chance",
+        "show_child": true,
+        "prob": "",
+        "_id": "548d8f9376f0b6841c351151",
+        "children": [
+          {
+            "node_id": 4,
+            "parent_id": 2,
+            "name": "Date accepted",
+            "tip": "",
+            "type": "chance",
+            "show_child": true,
+            "prob": "pDate_accepted",
+            "_id": "548d8f9376f0b6841c351150",
+            "children": [
+              {
+                "node_id": 8,
+                "parent_id": 4,
+                "name": "Shopping",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "prob": "20%",
+                "_id": "548d8f9376f0b6841c35114e",
+                "children": [
+                  {
+                    "node_id": 13,
+                    "parent_id": 8,
+                    "name": "Buy Designer bag",
+                    "tip": "奥拉奥拉奥拉奥拉",
+                    "type": "terminal",
+                    "show_child": true,
+                    "prob": "10%",
+                    "_id": "548d8f9376f0b6841c35114d",
+                    "children": [],
+                    "payoff_array": [
+                      "cTaxi+cBag",
+                      "uBag_bought"
+                    ],
+                    "tracker_array": [],
+                    "redefined_param_array": [],
+                    "node_path_array": [
+                      1,
+                      2,
+                      4,
+                      8
+                    ]
+                  },
+                  {
+                    "node_id": 14,
+                    "parent_id": 8,
+                    "name": "No purchase",
+                    "tip": "",
+                    "type": "terminal",
+                    "show_child": true,
+                    "prob": "#",
+                    "_id": "548d8f9376f0b6841c35114c",
+                    "children": [],
+                    "payoff_array": [
+                      "cTaxi+cBag",
+                      "uBag_not_bought"
+                    ],
+                    "tracker_array": [],
+                    "redefined_param_array": [],
+                    "node_path_array": [
+                      1,
+                      2,
+                      4,
+                      8
+                    ]
+                  }
+                ],
+                "payoff_array": [],
+                "tracker_array": [],
+                "redefined_param_array": [
+                  {
+                    "param_id": 6,
+                    "formula": "200",
+                    "_id": "548d8f9376f0b6841c35114f"
+                  }
+                ],
+                "node_path_array": [
+                  1,
+                  2,
+                  4
+                ]
+              },
+              {
+                "node_id": 9,
+                "parent_id": 4,
+                "name": "Karaoke",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "prob": "30%",
+                "_id": "548d8f9376f0b6841c35114b",
+                "children": [],
+                "payoff_array": [
+                  "cTaxi+cKaraoke",
+                  "uKaraoke"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [],
+                "node_path_array": [
+                  1,
+                  2,
+                  4
+                ]
+              },
+              {
+                "node_id": 10,
+                "parent_id": 4,
+                "name": "Movie",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "prob": "50%",
+                "_id": "548d8f9376f0b6841c351149",
+                "children": [],
+                "payoff_array": [
+                  "cTaxi+cMovie",
+                  "uMovie"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [
+                  {
+                    "param_id": 6,
+                    "formula": "30",
+                    "_id": "548d8f9376f0b6841c35114a"
+                  }
+                ],
+                "node_path_array": [
+                  1,
+                  2,
+                  4
+                ]
+              }
+            ],
+            "payoff_array": [],
+            "tracker_array": [],
+            "redefined_param_array": [],
+            "node_path_array": [
+              1,
+              2
+            ]
+          },
+          {
+            "node_id": 5,
+            "parent_id": 2,
+            "name": "Date rejected",
+            "tip": "",
+            "type": "terminal",
+            "show_child": true,
+            "prob": "#",
+            "_id": "548d8f9376f0b6841c351148",
+            "children": [],
+            "payoff_array": [
+              "0",
+              "uDate_rejected"
+            ],
+            "tracker_array": [],
+            "redefined_param_array": [],
+            "node_path_array": [
+              1,
+              2
+            ]
+          }
+        ],
+        "payoff_array": [],
+        "tracker_array": [],
+        "redefined_param_array": [],
+        "node_path_array": [1]
+      },
+      {
+        "node_id": 3,
+        "parent_id": 1,
+        "name": "Hang out with buddies",
+        "tip": "",
+        "type": "chance",
+        "show_child": true,
+        "prob": "",
+        "_id": "548d8f9376f0b6841c351147",
+        "children": [
+          {
+            "node_id": 6,
+            "parent_id": 3,
+            "name": "Buddies have time",
+            "tip": "",
+            "type": "chance",
+            "show_child": true,
+            "prob": "pHave_time",
+            "_id": "548d8f9376f0b6841c351145",
+            "children": [
+              {
+                "node_id": 11,
+                "parent_id": 6,
+                "name": "DOTA",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "prob": "pDota",
+                "_id": "548d8f9376f0b6841c351144",
+                "children": [],
+                "payoff_array": [
+                  "cNet_cafe",
+                  "uDota"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [],
+                "node_path_array": [
+                  1,
+                  3,
+                  6
+                ]
+              },
+              {
+                "node_id": 12,
+                "parent_id": 6,
+                "name": "Drink",
+                "tip": "out for a drink lalala",
+                "type": "terminal",
+                "show_child": true,
+                "prob": "pDrink",
+                "_id": "548d8f9376f0b6841c351143",
+                "children": [],
+                "payoff_array": [
+                  "cTaxi+cFood+cWine",
+                  "uDrink"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [],
+                "node_path_array": [
+                  1,
+                  3,
+                  6
+                ]
+              }
+            ],
+            "payoff_array": [],
+            "tracker_array": [],
+            "redefined_param_array": [
+              {
+                "param_id": 2,
+                "formula": "if(weekdays=1; 30%; 40%)",
+                "_id": "548d8f9376f0b6841c351146"
+              }
+            ],
+            "node_path_array": [
+              1,
+              3
+            ]
+          },
+          {
+            "node_id": 7,
+            "parent_id": 3,
+            "name": "Buddies have no time",
+            "tip": "",
+            "type": "terminal",
+            "show_child": true,
+            "prob": "#",
+            "_id": "548d8f9376f0b6841c351142",
+            "children": [],
+            "payoff_array": [
+              "0",
+              "uBuddy_no_time"
+            ],
+            "tracker_array": [],
+            "redefined_param_array": [],
+            "node_path_array": [
+              1,
+              3
+            ]
+          }
+        ],
+        "payoff_array": [],
+        "tracker_array": [],
+        "redefined_param_array": [],
+        "node_path_array": [1]
+      }
+    ],
+    "payoff_array": [],
+    "tracker_array": [],
+    "redefined_param_array": [],
+    "node_path_array": []
+  },
+  "config": {
+    "name": "王二狗的决策树",
+    "description": "关于今晚干什么的人生重大决定",
+    "security_level": "private",
+    "layout_style": "white-print",
+    "show_title": true,
+    "show_info": true,
+    "show_param": true,
+    "show_tracker": true,
+    "show_payoff": true,
+    "show_tip": true,
+    "layer_width": [
+      300,
+      220,
+      220,
+      234
+    ],
+    "last_saved_time": "2014-12-14T13:24:35.564Z",
+    "create_time": "2014-12-14T13:24:35.563Z"
+  },
+  "__v": 0
+}

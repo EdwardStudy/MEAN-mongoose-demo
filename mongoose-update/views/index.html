@@ -1,20 +1,15 @@
 <% include header.html %>
 	<h1>Welcome to <%= title %></h1>
+	<p>此应用为依附于决策树项目</p>
 	<ul>
 		<li>
-		    <p><a href="/dtree/add">添加dtree</a></p>
+		    <p><a href="/dtree/add">添加dtree到数据库</a></p>
 		</li>
 		<li>
-			<p><a href='/dtree/<%= name %>'>修改dtree</a></p>
+			<p><a href='/dtree/deserialize'>将数据库中的node反序列化</a></p>
 		</li>
 		<li>
-			<p><a href="/changestructure/<%= name %>">添加新的结点</a></p>
-		</li>
-		<li>
-			<p><a href="/createchildren/<%= name %>">添加子节点</a></p>
-		</li>
-		<li>
-			<p><a href="/dtree/json/<%= name %>">输出json</a></p>
+			<p><a href='/dtree/serialize'>将node序列化存入数据库</a></p>
 		</li>
     </ul>
 

@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId;
+
 var Dtree = mongoose.model('DTree');
 var fs = require('fs');
 var assert = require('assert');
@@ -6,192 +8,214 @@ var assert = require('assert');
 
 mongoose.model('DTree');
 
-exports.dTreeAdd = function(req, res){
-	if(req.params.name){//update
-		res.render('dTree', {
-			title: req.params.name + ' Management',
-			label: 'Edit: ' + req.params.name,
-			dtree: req.params.name
-		});
-	}else{
-		res.render('dTree', {
-			title: 'Add Management',
-			label: 'Add',
-			dtree: false
-		});
-	}
-
-
+exports.dTreeAdd = function (req, res) {
+    if (req.params.name) {//update
+        res.render('dTree', {
+            title: req.params.name + ' Management',
+            label: 'Edit: ' + req.params.name,
+            dtree: req.params.name
+        });
+    } else {
+        res.render('dTree', {
+            title: 'Add Management',
+            label: 'Add',
+            dtree: false
+        });
+    }
 };
 
 exports.doDTreeAdd = function(req, res){
-	console.log("Now");
-	fs.readFile('./public/javascripts/import.json', 'utf8', function (err, data) {
-		if(err) throw err;
-		var json = JSON.parse(data);
-		if(json._id){//update
-			console.log("Now updating");
-		}else{//insert
-			Dtree.create(json, function(err, dtree, numAffected){
-				if(err){
-					res.send({'success':false,'err':err});
-				}else{
-					res.send({'success':true});
-					console.log("dtree created and saved: " + dtree);
-					res.redirect('/');			
-				}
-			});
-		}	  
-	});
+    console.log("Now");
+    fs.readFile(__dirname + '/../testjson/new_structure.json', 'utf8', function (err, data) {
+        if(err) throw err;
+        var json = JSON.parse(data);
+        if(json._id){//update
+            console.log("Now updating");
+        }else{//insert
+            Dtree.create(json, function(err, dtree, numAffected){
+                if(err){
+                    res.send({'success':false,'err':err});
+                }else{
+                    //res.send({'success':true});
+                    //console.log("dtree created and saved: " + dtree);
+                    res.redirect('/');
+                }
+            });
+        }
+    });
 };
 
 
-exports.dTreeJSON = function(req, res){
-	Dtree.findByName(req.params.name, function(err, obj){
-		res.send(obj);
-	});
+exports.doSerialize = function (req, res) {
+    fs.readFile(__dirname + '/../testjson/trees.json', 'utf8', function (err, data) {
+        if (err) throw err;
+
+        console.log(typeof(data));
+        var dtreeJsonData = JSON.parse(data);
+        //last_saved_time第一个存储不填写，存储default值
+        var nodes = dtreeJsonData.node_array;
+        dtreeToArray(nodes);
+
+        dtreeJsonData.node_array = nodes;
+        dtreeJsonData.config.last_saved_time = Date.now();
+
+        Dtree.remove({"_id": dtreeJsonData._id}, function(){
+            Dtree.create(dtreeJsonData, function(err, dtree, numAffected){
+                if(err){
+                    res.send({'success':false,'err':err});
+                }else{
+                    //res.send({'success':true});
+                    //console.log("dtree created and saved: " + dtree);
+                    res.redirect('/');
+                }
+            });
+        });
+
+    });
 };
 
-//GET 添加structure结点 
-exports.dtreeStructure = function(req, res){
-	if(req.params.name){//update
-		res.render('structure', {
-			title: req.params.name + ' Management',
-			dtree: req.params.name
-		});
-	}else{
-		res.render('index', {
-  			title: 'Index',
-  			name: 'Type00',
-			dtree: false
-		});
-	}
+//将读取数据库的数据，将其node_array的节点反序列化
+exports.deserialize = function (req, res) {
+    var checkId = new ObjectId('548d8f9376f0b6841c35113f');
+    var node_array;
+    var nodes;
+    Dtree.findById(checkId).lean().exec(function (err, dtrees) {
+        //var nodes = dtrees.node_array.toString();
+        //console.log(dtrees.constructor === Array);
+        //var jnodes = JSON.stringify(dtrees);
+        node_array = dtrees.node_array;
+        console.log(dtrees);
+        //res.send(node_array);
+        console.log('node_array: ', node_array);
+        //nodes node_array 树结构
+        nodes = arrayToTree(node_array);
+        //排序
+        nodes = sortNodes(nodes);
+        console.log('nodes: ', JSON.stringify(nodes));
+        dtrees.node_array = nodes;
+
+
+        //将结果输出到文件
+        fs.writeFile(__dirname + '/../testjson/trees.json', JSON.stringify(dtrees), function (err) {
+            if (err) throw err;
+            console.log("It's writed.");
+        });
+
+        res.render('deserialize', {
+            title: 'deserialize',
+            node_array: node_array,
+            nodes: JSON.stringify(nodes)
+            //dtree: false
+        });
+    });
 };
 
-//params req.params.name
-exports.createDtreeStructure = function(req, res){	
-	//Find dtree by name
-	Dtree.findByName(req.params.name, function(err, dtree){
-		if(!err){
-			//1.成功读取tree
-			//读取新增结点
-			var json;
-			fs.readFile('./public/javascripts/update.json', 'utf8', function (err, data) {
-				if(err)throw err;
-				json = JSON.parse(data);
-				console.log(json);
-				//2.插入structure
-				dtree.structure.push(json);
-				//3.save to mongodb
-				dtree.save(function(err, tree){
-					if(err){
-						console.log('Somthing wrong: ' + err);
-					}else{
-						console.log('Add a new node', tree);
-						res.redirect('/dtree/json/Type00');				
-					}
-				});		  
-			});
-		}else{
-			console.log('Somthing wrong: ' + err);
-		}
-
-	});
+exports.dTreeJSON = function (req, res) {
+    Dtree.findByName(req.params.name, function (err, obj) {
+        res.send(obj);
+    });
 };
 
-exports.dtreeChildren = function(req, res){
-	if(req.params.name){//update
-		res.render('children', {
-			title: req.params.name + ' Management',
-			dtree: req.params.name
-		});
-	}else{
-		res.render('index', {
-  			title: 'Index',
-  			name: 'Type00',
-			dtree: false
-		});
-	}	
+//树的序列化
+/**
+ * 调用递归方法.serialize()，将dtree的树结构节点序列化为数组
+ * @function dtreeToArray
+ * @param {Object Node} nodes 树结构的节点dtree文档中的node_array节点
+ * @return {Array} node_array 升序节点数组
+ */
+var dtreeToArray = function (nodes) {
+    var node_array = [];
+
+    node_array = serialize(nodes, node_array).node_array;
+    node_array.sort(function (a, b) {
+        return a.node_id - b.node_id
+    });
+
+    //console.log(node_array);
+    return node_array;
 };
 
-//params req.params.name
-exports.createDtreeChildren = function(req, res){
-	//Find dtree by name
-	Dtree.findByName(req.params.name, function(err, dtree){
-		if(!err){
-			//成功读取tree
-			// 深度优先相关
-			// var treeStructure = dtree.structure;
-			// var treeConfig = dtree.config;
-			// var treeParameter = dtree.parameter;
-			//读取新增结点
-			var json;
-			fs.readFile('./public/javascripts/update.json', 'utf8', function (err, data) {
-				if(err)throw err;
-				json = JSON.parse(data);
-				//structure parse
-				//structure 为一个数组
-				//structure[i] 为首个结点
-				//structure[i].children 为其子节点 
-				var newchildren = dtree.structure[0].children;
-				//2.插入structure
-				dtree.structure[0].children.push(json);
-				console.log(dtree.structure[0].children);
-				dtree.markModified(dtree.structure[0].children);
-				//3.save to mongodb
-				dtree.save(function(err, tree){
-					if(err){
-						console.log('Somthing wrong: ' + err);
-					}else{
-						console.log('Add a new node: '+ dtree.structure[0].children);
-						res.redirect('/dtree/json/Type00');				
-					}
-				});		  
-			});
-		}else{
-			console.log('Somthing wrong: ' + err);
-		}
+/**
+ * 递归，深度优先历遍每个节点，将节点的子节点存入数组
+ * @function serialize
+ * @param {Object Node} node 树结构的节点集，递归时为存入node_array的元素(节点)
+ *         {Array} node_array 数组结构的节点集
+ * @return {Object Node} node 包含树结构的节点，每次递归，节点的children数组元素(节点)少一
+ *          {Array} node_array 数组结构的节点集，每次递归，该数组元素(节点)添一
+ */
+var serialize = function (node, node_array) {
 
-	});
+    while (node.children.length) {
+        node_array = serialize(node.children [0], node_array).node_array;
+        node.children.splice(0, 1); //.splice(i, 1) 删除node.children[]中index i的元素
+        //需要注意 当子节点children数组为空，此步无效
+    }
+    node_array.push(node); //.push()到node_array
+
+    return ({node: node, node_array: node_array});
 };
 
+/**
+ * 将dtree的节点反序列化为树结构
+ * @function arrayToTree
+ * @param {Array} node_array dtree文档中的node_array节点数组
+ * @return {Object Node} temp_array[0] 包含树结构的根节点
+ */
+var arrayToTree = function (node_array) {
+    var temp_array = node_array;
 
-//寻找插入位置
-//
-var findPos = function(dtree){
-	//dtree.structure(){}
-}
-//寻找structure
-var rootFirstTraversalStructure = function(structure){
-	rootFirstTraversal(structure); //获得collection
-}
+    //将节点数组升序
+    temp_array.sort(function (a, b) {
+        return a.node_id - b.node_id
+    });
 
-var getChildren = function (d) {
-	var d_children = d.children && d.children.length > 0 ? d.children : null;
-	d_children = d._children && d._children.length > 0 ? d._children : null || d_children;
-	return d_children;
-}
+    //节点的children定义为空数组，@TODO 是否可以删除
+    node_array.forEach(function (node) {
+        //The splice() method changes the content of an array, adding new elements while removing old elements.
+        //params index, remove count, insert ele
+        //temp_array.splice(node.node_id - 1, 1, node._doc);
+        node.children = []; //children is Array
+    });
 
-var rootFirstTraversal = function (d) {
-	if (!d) return;
-	//todo
-	console.log(d);
-	var d_children = getChildren(d);
-	if (d_children) {
-		for (var i = 0; i < d_children.length; i++) {
-			rootFirstTraversal(d_children[i]);
-		}
-	}
-}
+    //从下往上将每个节点添加到父节点的children数组中
+    var i = 0;
+    var count = temp_array.length;
+    for (i = (count - 1); i > 0; i--) {
+        if (temp_array[temp_array[i].parent_id - 1] !== null) {
+            //.pop() 删除最后一个元素并返回 ._doc 为node对象
+            var tNode = temp_array[i];
+            //console.log('tNode : ', tNode);
+            //是否需要建立chilren_id temp_array[tNode.parent_id].children_id = ;
+            //if(){
 
-var readJson = function(){
-	var url = '';
-	var json;
-	fs.readFile('./public/javascripts/update.json', 'utf8', function (err, data) {
-	  if (err) throw err;
-	  json = JSON.parse(data);
-	  console.log(json);
-	  return json;
-	});
-		
-}
+            //}
+            temp_array[tNode.parent_id - 1].children.push(tNode);
+            //temp_array[tNode.parent_id].children = tNode;  children is Array
+            //console.log('father node:  ',temp_array[tNode.parent_id]);
+            //console.log('children' in temp_array[tNode.parent_id]);
+        }
+    }
+
+    return temp_array[0];
+};
+
+/**
+ * 将树的每层子节点排序，递归
+ * @function sortNodes
+ * @param {Object Node} nodes 包含树结构的根节点，子节点的顺序为降序
+ * @return {Object Node} nodes 原物奉还，各子节点数组的顺序为升序
+ */
+
+var sortNodes = function (nodes) {
+    if (nodes.children.length > 0) {
+        var i = 0;
+        for (; i < nodes.children.length; i++) {
+            nodes.children[i] = sortNodes(nodes.children[i]);
+        }
+        nodes.children.sort(function (a, b) {
+            return a.node_id - b.node_id
+        });
+    }
+
+    return nodes;
+};

@@ -7,9 +7,10 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "connect": "2.7.x",
     "express": "3.4.8",
     "jade": "*",
-    "connect": "2.7.x",
-    "mongoose": "3.6.x"
+    "mongoose": "3.6.x",
+    "session-mongoose": "^0.5.2"
   }
 }

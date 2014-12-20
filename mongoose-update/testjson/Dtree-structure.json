@@ -1,0 +1,580 @@
+{
+	"config":    {
+		"name":           "王二狗的决策树",
+		"description":    "关于今晚干什么的人生重大决定",
+		"last_saved":     "07/10/2014 09:10:53",
+		"security_level": "private",
+		"layout_style":   "white-print",
+
+		"depth":       4,
+		"layer_width": [300, 220, 220, 234],
+
+		"show_title":         true,
+		"show_info":          true,
+		"show_default_info":  true,
+		"show_compiled_info": true,
+		"show_parsed_info":   true,
+		"show_variable":      true,
+		"show_tracker":       true,
+		"show_payoff":        true
+	},
+	"parameter": [
+		{
+			"pid": 1,
+			"name":        "pDateSuccess",
+			"formula":     "10%",
+			"category":    "probability",
+			"display":     true,
+			"description": "泡妞成功的可能性"
+		},
+		{
+			"pid": 2,
+			"name":        "pDate",
+			"formula":     "30%",
+			"category":    "probability",
+			"display":     true,
+			"description": "约会的可能性"
+		},
+		{
+			"pid": 3,
+			"name":        "pDinning",
+			"formula":     null,
+			"category":    "probability",
+			"display":     true,
+			"description": "喝酒的可能性"
+		},
+		{
+			"pid": 4,
+			"name":        "cDate",
+			"formula":     "cKTV+cGift",
+			"category":    "cost",
+			"display":     true,
+			"description": "约会开销"
+		},
+		{
+			"pid": 5,
+			"name":        "cKTV",
+			"formula":     null,
+			"category":    "cost",
+			"display":     true,
+			"description": "唱K开销"
+		},
+		{
+			"pid": 6,
+			"name":        "cGift",
+			"formula":     null,
+			"category":    "cost",
+			"display":     true,
+			"description": "给女生的小礼物"
+		},
+		{
+			"pid": 7,
+			"name":        "cDateSuccess",
+			"formula":     "dis_cDateSuccess",
+			"category":    "cost",
+			"display":     true,
+			"description": "约会成功的后续开销"
+		},
+		{
+			"pid": 8,
+			"name":        "cDateFail",
+			"formula":     "0",
+			"category":    "cost",
+			"display":     true,
+			"description": "约会失败的后续开销"
+		},
+		{
+			"pid": 9,
+			"name":        "cShopping",
+			"formula":     "pClothesbuying*cClothes",
+			"category":    "cost",
+			"display":     true,
+			"description": "逛街开销"
+		},
+		{
+			"pid": 10,
+			"name":        "cClothes",
+			"formula":     "dis_Clothes",
+			"category":    "cost",
+			"display":     true,
+			"description": "衣服价格"
+		},
+		{
+			"pid": 11,
+			"name":        "pClothesbuying",
+			"formula":     "32%",
+			"category":    "probability",
+			"display":     true,
+			"description": "买衣服可能性"
+		},
+		{
+			"pid": 12,
+			"name":        "cDinning",
+			"formula":     "200",
+			"category":    "cost",
+			"display":     true,
+			"description": "跟哥们吃饭的开销"
+		},
+		{
+			"pid": 13,
+			"name":        "cStudy",
+			"formula":     "0",
+			"category":    "cost",
+			"display":     true,
+			"description": "上自习的开销"
+		},
+		{
+			"pid": 14,
+			"name":        "cDOTA",
+			"formula":     "10",
+			"category":    "cost",
+			"display":     true,
+			"description": "网吧的开销"
+		},
+		{
+			"pid": 15,
+			"name":        "uDateSuccess",
+			"formula":     "10",
+			"category":    "happiness",
+			"display":     true,
+			"description": "泡妞成功的心情"
+		},
+		{
+			"pid": 17,
+			"name":        "uDateFail",
+			"formula":     "1",
+			"category":    "happiness",
+			"display":     true,
+			"description": "泡妞失败的心情"
+		},
+		{
+			"pid": 18,
+			"name":        "uShopping",
+			"formula":     "5",
+			"category":    "happiness",
+			"display":     true,
+			"description": "陪妞逛街的心情"
+		},
+		{
+			"pid": 19,
+			"name":        "uDinning",
+			"formula":     "6",
+			"category":    "happiness",
+			"display":     true,
+			"description": "和哥们吃饭的心情"
+		},
+		{
+			"pid": 20,
+			"name":        "uStudy",
+			"formula":     "4",
+			"category":    "happiness",
+			"display":     true,
+			"description": "上自习的心情"
+		},
+		{
+			"pid": 21,
+			"name":        "uDOTA",
+			"formula":     "6",
+			"category":    "happiness",
+			"display":     true,
+			"description": "玩DOTA的心情"
+		}
+	],
+	"structure" : {
+		"id":                1,
+		"name":              "晚上干嘛？",
+		"type":              "decision",
+		"change":            [],
+		"markov_info":       [],
+
+		"variable":          [],
+		"tracker":           [],
+		"payoff":            [],
+
+		"compiled_prob":     [],
+		"compiled_variable": [],
+		"compiled_tracker":  [],
+		"compiled_payoff":   [],
+
+		"parsed_prob":       [],
+		"parsed_variable":   [],
+		"parsed_tracker":    [],
+		"parsed_payoff":     [],
+
+		"children":          [
+			{
+				"id":                2,
+				"name":              "找妹子",
+				"type":              "change",
+				"change":            [],
+				"markov_info":       [],
+				"tip":               "啦啦啦啦啦",
+
+				"variable":          [
+					{
+						"pid": 5,
+						"name":        "cKTV",
+						"formula":     null,
+						"category":    "cost",
+						"display":     true,
+						"description": "唱K开销"
+					},
+					{
+						"pid": 6,
+						"name":        "cGift",
+						"formula":     null,
+						"category":    "cost",
+						"display":     true,
+						"description": "给女生的小礼物"
+					}
+				],
+				"tracker":           [],
+				"payoff":            [],
+				"compiled_prob":     [],
+				"compiled_variable": [],
+				"compiled_tracker":  [],
+				"compiled_payoff":   [],
+				"parsed_prob":       [],
+				"parsed_variable":   [],
+				"parsed_tracker":    [],
+				"parsed_payoff":     [],
+				"children":          [
+					{
+						"id":                4,
+						"name":              "约会",
+						"type":              "change",
+						"change":            "pDate",
+						"markov_info":       [],
+						"variable":          [
+							{
+								"pid": 2,
+								"name":        "pDate",
+								"formula":     "30%",
+								"category":    "probability",
+								"display":     true,
+								"description": "约会的可能性"
+							},
+							{
+								"pid": 4,
+								"name":        "cDate",
+								"formula":     "cKTV+cGift",
+								"category":    "cost",
+								"display":     true,
+								"description": "约会开销"
+							}
+						],
+						"tracker":           [],
+						"payoff":            [],
+						"compiled_prob":     [],
+						"compiled_variable": [],
+						"compiled_tracker":  [],
+						"compiled_payoff":   [],
+						"parsed_prob":       [],
+						"parsed_variable":   [],
+						"parsed_tracker":    [],
+						"parsed_payoff":     [],
+						"children":          [
+							{
+								"id":                6,
+								"name":              "约会成功",
+								"type":              "terminal",
+								"change":            "pDateSuccess",
+								"markov_info":       [],
+								"variable":          [
+									{
+										"pid": 1,
+										"name":        "pDateSuccess",
+										"formula":     "10%",
+										"category":    "probability",
+										"display":     true,
+										"description": "泡妞成功的可能性"
+									},
+									{
+										"pid": 7,
+										"name":        "cDateSuccess",
+										"formula":     "dis_cDateSuccess",
+										"category":    "cost",
+										"display":     true,
+										"description": "约会成功的后续开销"
+									},
+									{
+										"pid": 15,
+										"name":        "uDateSuccess",
+										"formula":     "10",
+										"category":    "happiness",
+										"display":     true,
+										"description": "泡妞成功的心情"
+									}
+								],
+								"tracker":           [],
+								"payoff":            {
+									"payoff1": "cDate+cDateSuccess",
+									"payoff2": "uDateSuccess"
+								},
+								"compiled_prob":     [],
+								"compiled_variable": [],
+								"compiled_tracker":  [],
+								"compiled_payoff":   [],
+								"parsed_prob":       [],
+								"parsed_variable":   [],
+								"parsed_tracker":    [],
+								"parsed_payoff":     [],
+								"children":          [],
+								"_children":         []
+							},
+							{
+								"id":                7,
+								"name":              "炮灰",
+								"type":              "terminal",
+								"tip":               "奥拉奥拉奥拉奥拉",
+								"change":            "#",
+								"markov_info":       [],
+								"variable":          [
+									{
+										"pid": 8,
+										"name":        "cDateFail",
+										"formula":     "0",
+										"category":    "cost",
+										"display":     true,
+										"description": "约会失败的后续开销"
+									},
+									{
+										"pid": 17,
+										"name":        "uDateFail",
+										"formula":     "1",
+										"category":    "happiness",
+										"display":     true,
+										"description": "泡妞失败的心情"
+									}
+								],
+								"tracker":           [],
+								"payoff":            {
+									"payoff1": "cDate",
+									"payoff2": "uDateFail"
+								},
+								"compiled_prob":     [],
+								"compiled_variable": [],
+								"compiled_tracker":  [],
+								"compiled_payoff":   [],
+								"parsed_prob":       [],
+								"parsed_variable":   [],
+								"parsed_tracker":    [],
+								"parsed_payoff":     [],
+								"children":          [],
+								"_children":         []
+							}
+						],
+						"_children":         []
+					},
+					{
+						"id":                5,
+						"name":              "逛街",
+						"type":              "terminal",
+						"change":            "#",
+						"markov_info":       [],
+						"variable":          [
+							{
+								"pid": 9,
+								"name":        "cShopping",
+								"formula":     "pClothesbuying*cClothes",
+								"category":    "cost",
+								"display":     true,
+								"description": "逛街开销"
+							},
+							{
+								"pid": 10,
+								"name":        "cClothes",
+								"formula":     "dis_Clothes",
+								"category":    "cost",
+								"display":     true,
+								"description": "衣服价格"
+							},
+							{
+								"pid": 11,
+								"name":        "pClothesbuying",
+								"formula":     "32%",
+								"category":    "probability",
+								"display":     true,
+								"description": "买衣服可能性"
+							},
+							{
+								"pid": 18,
+								"name":        "uShopping",
+								"formula":     "5",
+								"category":    "happiness",
+								"display":     true,
+								"description": "陪妞逛街的心情"
+							}
+						],
+						"tracker":           [],
+						"payoff":            {
+							"payoff1": "cShopping",
+							"payoff2": "uShopping"
+						},
+						"compiled_prob":     [],
+						"compiled_variable": [],
+						"compiled_tracker":  [],
+						"compiled_payoff":   [],
+						"parsed_prob":       [],
+						"parsed_variable":   [],
+						"parsed_tracker":    [],
+						"parsed_payoff":     [],
+						"children":          [],
+						"_children":         []
+					}
+				],
+				"_children":         []
+			},
+			{
+				"id":                3,
+				"name":              "找哥们",
+				"type":              "change",
+				"change":            [],
+				"markov_info":       [],
+				"variable":          [],
+				"tracker":           [],
+				"payoff":            [],
+				"compiled_prob":     [],
+				"compiled_variable": [],
+				"compiled_tracker":  [],
+				"compiled_payoff":   [],
+				"parsed_prob":       [],
+				"parsed_variable":   [],
+				"parsed_tracker":    [],
+				"parsed_payoff":     [],
+				"children":          [
+					{
+						"id":                8,
+						"name":              "喝酒",
+						"type":              "terminal",
+						"change":            "pDinning",
+						"markov_info":       [],
+						"variable":          [
+							{
+								"pid": 3,
+								"name":        "pDinning",
+								"formula":     null,
+								"category":    "probability",
+								"display":     true,
+								"description": "喝酒的可能性"
+							},
+							{
+								"pid": 12,
+								"name":        "cDinning",
+								"formula":     "200",
+								"category":    "cost",
+								"display":     true,
+								"description": "跟哥们吃饭的开销"
+							},
+							{
+								"pid": 19,
+								"name":        "uDinning",
+								"formula":     "6",
+								"category":    "happiness",
+								"display":     true,
+								"description": "和哥们吃饭的心情"
+							}
+						],
+						"tracker":           [],
+						"payoff":            {
+							"payoff1": "cDinning",
+							"payoff2": "uDinning"
+						},
+						"compiled_prob":     [],
+						"compiled_variable": [],
+						"compiled_tracker":  [],
+						"compiled_payoff":   [],
+						"parsed_prob":       [],
+						"parsed_variable":   [],
+						"parsed_tracker":    [],
+						"parsed_payoff":     [],
+						"children":          [],
+						"_children":         []
+					},
+					{
+						"id":                9,
+						"name":              "上自习",
+						"type":              "terminal",
+						"change":            "10%",
+						"markov_info":       [],
+						"variable":          [
+							{
+								"pid": 13,
+								"name":        "cStudy",
+								"formula":     "0",
+								"category":    "cost",
+								"display":     true,
+								"description": "上自习的开销"
+							},
+							{
+								"pid": 20,
+								"name":        "uStudy",
+								"formula":     "4",
+								"category":    "happiness",
+								"display":     true,
+								"description": "上自习的心情"
+							}
+						],
+						"tracker":           [],
+						"payoff":            {
+							"payoff1": "cStudy",
+							"payoff2": "uStudy"
+						},
+						"compiled_prob":     [],
+						"compiled_variable": [],
+						"compiled_tracker":  [],
+						"compiled_payoff":   [],
+						"parsed_prob":       [],
+						"parsed_variable":   [],
+						"parsed_tracker":    [],
+						"parsed_payoff":     [],
+						"children":          [],
+						"_children":         []
+					},
+					{
+						"id":                10,
+						"name":              "DOTA",
+						"type":              "terminal",
+						"change":            "#",
+						"markov_info":       [],
+						"variable":          [
+							{
+								"pid": 14,
+								"name":        "cDOTA",
+								"formula":     "10",
+								"category":    "cost",
+								"display":     true,
+								"description": "网吧的开销"
+							},
+							{
+								"pid": 21,
+								"name":        "uDOTA",
+								"formula":     "6",
+								"category":    "happiness",
+								"display":     true,
+								"description": "玩DOTA的心情"
+							}
+						],
+						"tracker":           [],
+						"payoff":            {
+							"payoff1": "cDOTA",
+							"payoff2": "uDOTA"
+						},
+						"compiled_prob":     [],
+						"compiled_variable": [],
+						"compiled_tracker":  [],
+						"compiled_payoff":   [],
+						"parsed_prob":       [],
+						"parsed_variable":   [],
+						"parsed_tracker":    [],
+						"parsed_payoff":     [],
+						"children":          [],
+						"_children":         []
+					}
+				],
+				"_children":         []
+			}
+		],
+		"_children":         []
+	}
+}
