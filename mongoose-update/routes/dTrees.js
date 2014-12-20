@@ -56,11 +56,10 @@ exports.doSerialize = function (req, res) {
         var nodes = dtreeJsonData.node_array;
         dtreeToArray(nodes);
 
-        dtreeJsonData.node_array = nodes;
-        dtreeJsonData.config.last_saved_time = Date.now();
+        //dtreeJsonData.node_array = nodes;
+        //dtreeJsonData.config.last_saved_time = Date.now();
 
-        Dtree.remove({"_id": dtreeJsonData._id}, function(){
-            Dtree.create(dtreeJsonData, function(err, dtree, numAffected){
+        Dtree.update({"_id": dtreeJsonData._id}, {"node_array": nodes, "config.last_saved_time": Date.now()}, function(err){
                 if(err){
                     res.send({'success':false,'err':err});
                 }else{
@@ -68,8 +67,19 @@ exports.doSerialize = function (req, res) {
                     //console.log("dtree created and saved: " + dtree);
                     res.redirect('/');
                 }
-            });
         });
+
+        //Dtree.remove({"_id": dtreeJsonData._id}, function(){
+        //    Dtree.create(dtreeJsonData, function(err, dtree, numAffected){
+        //        if(err){
+        //            res.send({'success':false,'err':err});
+        //        }else{
+        //            //res.send({'success':true});
+        //            //console.log("dtree created and saved: " + dtree);
+        //            res.redirect('/');
+        //        }
+        //    });
+        //});
 
     });
 };
@@ -136,7 +146,7 @@ var dtreeToArray = function (nodes) {
 };
 
 /**
- * 递归，深度优先历遍每个节点，将节点的子节点存入数组
+ * 递归，先序优先历遍每个节点，将节点的子节点存入数组
  * @function serialize
  * @param {Object Node} node 树结构的节点集，递归时为存入node_array的元素(节点)
  *         {Array} node_array 数组结构的节点集
