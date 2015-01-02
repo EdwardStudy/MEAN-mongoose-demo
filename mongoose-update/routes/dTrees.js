@@ -4,7 +4,8 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var Dtree = mongoose.model('DTree');
 var fs = require('fs');
 var assert = require('assert');
-
+//加载underscore库
+var _ = require("underscore")._;
 
 mongoose.model('DTree');
 
@@ -58,7 +59,7 @@ exports.doSerialize = function (req, res) {
 
         //dtreeJsonData.node_array = nodes;
         //dtreeJsonData.config.last_saved_time = Date.now();
-
+        //向数据库更新部分内容
         Dtree.update({"_id": dtreeJsonData._id}, {"node_array": nodes, "config.last_saved_time": Date.now()}, function(err){
                 if(err){
                     res.send({'success':false,'err':err});
@@ -86,27 +87,22 @@ exports.doSerialize = function (req, res) {
 
 //将读取数据库的数据，将其node_array的节点反序列化
 exports.deserialize = function (req, res) {
-    var checkId = new ObjectId('548d8f9376f0b6841c35113f');
+    var checkId = new ObjectId('54a4c0947752adcc1764f0d4');
     var node_array;
     var nodes;
-    Dtree.findById(checkId).lean().exec(function (err, dtrees) {
-        //var nodes = dtrees.node_array.toString();
-        //console.log(dtrees.constructor === Array);
-        //var jnodes = JSON.stringify(dtrees);
-        node_array = dtrees.node_array;
-        console.log(dtrees);
-        //res.send(node_array);
+    Dtree.findById(checkId).lean().exec(function (err, dtree) {
+        node_array = dtree.node_array;
+        console.log(dtree);
         console.log('node_array: ', node_array);
-        //nodes node_array 树结构
         nodes = arrayToTree(node_array);
         //排序
-        nodes = sortNodes(nodes);
+        //nodes = sortNodes(nodes);
         console.log('nodes: ', JSON.stringify(nodes));
-        dtrees.node_array = nodes;
+        dtree.node_array = nodes;
 
 
         //将结果输出到文件
-        fs.writeFile(__dirname + '/../testjson/trees.json', JSON.stringify(dtrees), function (err) {
+        fs.writeFile(__dirname + '/../testjson/trees.json', JSON.stringify(dtree), function (err) {
             if (err) throw err;
             console.log("It's writed.");
         });
@@ -126,10 +122,10 @@ exports.dTreeJSON = function (req, res) {
     });
 };
 
-//树的序列化
+//决策时树的序列化
 /**
- * 调用递归方法.serialize()，将dtree的树结构节点序列化为数组
  * @function dtreeToArray
+ * @desc 调用递归方法.serialize()，将dtree的树结构节点序列化为数组
  * @param {Object Node} nodes 树结构的节点dtree文档中的node_array节点
  * @return {Array} node_array 升序节点数组
  */
@@ -146,16 +142,16 @@ var dtreeToArray = function (nodes) {
 };
 
 /**
- * 递归，先序优先历遍每个节点，将节点的子节点存入数组
  * @function serialize
+ * @desc 递归调用，先序优先历遍每个节点，将节点的子节点存入数组
  * @param {Object Node} node 树结构的节点集，递归时为存入node_array的元素(节点)
- *         {Array} node_array 数组结构的节点集
+ * @param {Array} node_array 数组结构的节点集
  * @return {Object Node} node 包含树结构的节点，每次递归，节点的children数组元素(节点)少一
- *          {Array} node_array 数组结构的节点集，每次递归，该数组元素(节点)添一
+ * @return {Array} node_array 数组结构的节点集，每次递归，该数组元素(节点)添一
  */
 var serialize = function (node, node_array) {
 
-    while (node.children.length) {
+    while(node.children.length){
         node_array = serialize(node.children [0], node_array).node_array;
         node.children.splice(0, 1); //.splice(i, 1) 删除node.children[]中index i的元素
         //需要注意 当子节点children数组为空，此步无效
@@ -165,9 +161,10 @@ var serialize = function (node, node_array) {
     return ({node: node, node_array: node_array});
 };
 
+//反序列化
 /**
- * 将dtree的节点反序列化为树结构
  * @function arrayToTree
+ * @desc 将dtree的节点反序列化为树结构
  * @param {Array} node_array dtree文档中的node_array节点数组
  * @return {Object Node} temp_array[0] 包含树结构的根节点
  */
@@ -179,43 +176,46 @@ var arrayToTree = function (node_array) {
         return a.node_id - b.node_id
     });
 
-    //节点的children定义为空数组，@TODO 是否可以删除
+    //节点的children定义为空数组，不存入数据库
     node_array.forEach(function (node) {
-        //The splice() method changes the content of an array, adding new elements while removing old elements.
-        //params index, remove count, insert ele
-        //temp_array.splice(node.node_id - 1, 1, node._doc);
         node.children = []; //children is Array
+        node._children = []; //children is Array
     });
 
-    //从下往上将每个节点添加到父节点的children数组中
-    var i = 0;
-    var count = temp_array.length;
-    for (i = (count - 1); i > 0; i--) {
-        if (temp_array[temp_array[i].parent_id - 1] !== null) {
-            //.pop() 删除最后一个元素并返回 ._doc 为node对象
-            var tNode = temp_array[i];
-            //console.log('tNode : ', tNode);
-            //是否需要建立chilren_id temp_array[tNode.parent_id].children_id = ;
-            //if(){
-
-            //}
-            temp_array[tNode.parent_id - 1].children.push(tNode);
-            //temp_array[tNode.parent_id].children = tNode;  children is Array
-            //console.log('father node:  ',temp_array[tNode.parent_id]);
-            //console.log('children' in temp_array[tNode.parent_id]);
+    for(var i=0; i<node_array.length; i++) {
+        if(node_array[i].parent_id){
+            for(var j=0; j<temp_array.length; j++){
+                if(node_array[i].parent_id == temp_array[j].node_id){
+                    if(temp_array[j].show_child){
+                        temp_array[j].children.push(node_array[i]);
+                    }else{
+                        temp_array[j]._children.push(node_array[i]);
+                    }
+                    break;
+                }
+            }
         }
     }
+
+    ////从下往上将每个节点添加到父节点的children数组中
+    //var i = 0;
+    //var count = temp_array.length;
+    //for (i = (count - 1); i > 0; i--) {
+    //    if (temp_array[temp_array[i].parent_id - 1] !== null) {
+    //        var tNode = temp_array[i];
+    //        temp_array[tNode.parent_id - 1].children.push(tNode);;
+    //    }
+    //}
 
     return temp_array[0];
 };
 
 /**
- * 将树的每层子节点排序，递归
  * @function sortNodes
+ * @desc 将树的每层子节点排序，递归
  * @param {Object Node} nodes 包含树结构的根节点，子节点的顺序为降序
  * @return {Object Node} nodes 原物奉还，各子节点数组的顺序为升序
  */
-
 var sortNodes = function (nodes) {
     if (nodes.children.length > 0) {
         var i = 0;
@@ -228,4 +228,72 @@ var sortNodes = function (nodes) {
     }
 
     return nodes;
+};
+
+/**
+ * @function pickDTree
+ * @desc 调用underscore库的函数pick，选择要存入数据库的key
+ * @param {Object DTree} dtree 前端传过来的决策树，已经序列化
+ * @return {Object DTree} dtree 与数据库结构一致的决策树数据
+ */
+var pickDTree = function (dtree) {
+    //node_array部分
+    for(var i = 0; i < dtree.node_array.length; i++){
+        dtree.node_array[i] = _.pick(dtree.node_array[i],
+            "node_id",
+            "parent_id",
+            "node_path_array",
+            "name",
+            "tip",
+            "type",
+            "markov_info",
+            "show_child",:
+            "show_tip",
+            "prob",
+            "redefined_param_array",
+            "tracker_array",
+            "payoff_array"
+        );
+    }
+
+    //其他部分
+    dtree.config = _.pick(dtree.config,
+        "name",
+        "description",
+        "last_saved",
+        "security_level",
+        "layout_style",
+        "layer_width",
+        "show_info",
+        "show_param",
+        "show_tracker",
+        "show_payoff",
+        "show_tips",
+        "align_endArea"
+    );
+
+    dtree.param_array = _.pick(dtree.param_array,
+        "param_id",
+        "name",
+        "description",
+        "formula",
+        "category",
+        "display",
+        "comment"
+    );
+
+    dtree.param_category_array = _.pick(dtree.param_category_array,
+
+    );
+
+    dtree.table_array = _.pick(dtree.table_array,
+    );
+
+    dtree.distribution_array = _.pick(dtree.distribution_array,
+    );
+
+    dtree = _.pick(dtree,
+    );
+
+    return tree;
 };

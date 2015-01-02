@@ -5,14 +5,15 @@
     "security_level": "private",
     "layout_style":   "white-print",
 
-    "layer_width": [300, 220, 220, 234],
+    "layer_width": [200, 220, 300, 234, 234],
 
     "show_title":   true,
     "show_info":    true,
     "show_param":   true,
     "show_tracker": true,
     "show_payoff":  true,
-    "show_tip":     true
+    "show_tips":    true,
+    "align_endArea":true
   },
   "param_array": [
     {
@@ -247,10 +248,8 @@
     {
       "table_id":    1,
       "name":        "cFood_and_drink",
-      "value":       [
-        [100, 300],
-        [200, 400]
-      ],
+      "value":       [[100, 300], [200,400]],
+      "display":     true,
       "description": "cost table for food and drink",
       "comment":     ""
     }
@@ -261,13 +260,14 @@
       "distr_id":    1,
       "name":        "Dis_uBag_bought",
       "type":        "beta",
-      "value":       [8, 4],
+      "value":       [8,4],
+      "display":     true,
       "description": "Distribution of happiness lvl for buying a bag",
       "comment":     ""
     }
   ],
 
-  "node_array": [
+  "node_array":  [
     {
       "node_id":               1,
       "parent_id":             null,
@@ -277,6 +277,7 @@
       "type":                  "decision",
       "markov_info":           [],
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -288,9 +289,10 @@
       "node_path_array":       [1],
       "name":                  "Date a girl",
       "tip":                   "找女伴玩去",
-      "type":                  "chance",
+      "type":                  "change",
       "markov_info":           [],
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -302,9 +304,10 @@
       "node_path_array":       [1, 2],
       "name":                  "Date accepted",
       "tip":                   "",
-      "type":                  "chance",
+      "type":                  "change",
       "markov_info":           [],
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "pDate_accepted",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -316,13 +319,15 @@
       "node_path_array":       [1, 2, 4],
       "name":                  "Shopping",
       "tip":                   "",
-      "type":                  "terminal",
+      "type":                  "change",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "20%",
       "redefined_param_array": [
         {
           "param_id": 6,
+          "display":     true,
           "name":     "cTaxi",
           "formula":  "200"
         }
@@ -339,6 +344,7 @@
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "10%",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -353,6 +359,7 @@
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "#",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -367,6 +374,7 @@
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "30%",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -381,10 +389,12 @@
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "50%",
       "redefined_param_array": [
         {
           "param_id": 6,
+          "display":     true,
           "name":     "cTaxi",
           "formula":  "30"
         }
@@ -401,6 +411,7 @@
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "#",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -413,9 +424,10 @@
       "node_path_array":       [1],
       "name":                  "Hang out with buddies",
       "tip":                   "",
-      "type":                  "chance",
+      "type":                  "change",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -424,18 +436,20 @@
     {
       "node_id":               6,
       "parent_id":             3,
-      "node_path_array":       [1, 3],
+      "node_path_array":       [1,3],
       "name":                  "Buddies have time",
       "tip":                   "",
-      "type":                  "chance",
+      "type":                  "change",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "pHave_time",
       "redefined_param_array": [
         {
-          "param_id": 2,
-          "name":     "pHave_time",
-          "formula":  "if(weekdays=1; 30%; 40%)"
+          "param_id":    2,
+          "display":     true,
+          "name":        "pHave_time",
+          "formula":     "if(weekdays=1; 30%; 40%)"
         }
       ],
       "tracker_array":         [],
@@ -444,12 +458,13 @@
     {
       "node_id":               11,
       "parent_id":             6,
-      "node_path_array":       [1, 3, 6],
+      "node_path_array":       [1,3, 6],
       "name":                  "DOTA",
       "tip":                   "",
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "pDota",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -458,12 +473,13 @@
     {
       "node_id":               12,
       "parent_id":             6,
-      "node_path_array":       [1, 3, 6],
+      "node_path_array":       [1,3, 6],
       "name":                  "Drink",
       "tip":                   "out for a drink lalala",
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "pDrink",
       "redefined_param_array": [],
       "tracker_array":         [],
@@ -472,28 +488,32 @@
     {
       "node_id":               7,
       "parent_id":             3,
-      "node_path_array":       [1, 3],
+      "node_path_array":       [1,3],
       "name":                  "Buddies have no time",
       "tip":                   "",
       "type":                  "terminal",
       "markov_info":           null,
       "show_child":            true,
+      "show_tip":              true,
       "prob":                  "#",
       "redefined_param_array": [],
       "tracker_array":         [],
       "payoff_array":          ["0", "uBuddy_no_time"]
     }
   ],
+
   "payoff_array": [
     {
-      "payoff_id":     1,
-      "payoff_name":   "cost",
-      "payoff_weight": 1
+      "payoff_id": 1,
+      "name": "cost",
+      "weight": 1,
+      "description" : ""
     },
     {
-      "payoff_id":     2,
-      "payoff_name":   "happiness",
-      "payoff_weight": 1000
+      "payoff_id": 2,
+      "name": "happiness",
+      "weight": 1000,
+      "description" : ""
     }
   ]
 }
