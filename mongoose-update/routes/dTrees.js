@@ -283,17 +283,34 @@ var pickDTree = function (dtree) {
     );
 
     dtree.param_category_array = _.pick(dtree.param_category_array,
-
+        "category_id",
+        "name",
+        "description"
     );
 
     dtree.table_array = _.pick(dtree.table_array,
+        "table_id",
+        "name",
+        "description",
+        "value",
+        "comment"
     );
 
     dtree.distribution_array = _.pick(dtree.distribution_array,
+        "distr_id",
+        "name",
+        "description",
+        "type",
+        "value",
+        "display",
+        "comment"
     );
 
-    dtree = _.pick(dtree,
+    dtree.payoff_array = _.pick(dtree.payoff_array,
+        "payoff_id",
+        "payoff_name",
+        "payoff_weight"
     );
 
-    return tree;
+    return dtree;
 };
