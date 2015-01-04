@@ -64,7 +64,7 @@ app.get('/dtree/add', dTrees.dTreeAdd);//增加
 app.post('/dtree/add', dTrees.doDTreeAdd);//提交
 app.get('/dtree/deserialize', dTrees.deserialize);//反序列化
 app.get('/dtree/serialize', dTrees.doSerialize);//序列化
-app.get('/dtree/:name', dTrees.dTreeAdd);//编辑查询
+app.get('/dtree/pickdtree', dTrees.pickDtree);//选择需要存入数据库的内容
 
 app.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

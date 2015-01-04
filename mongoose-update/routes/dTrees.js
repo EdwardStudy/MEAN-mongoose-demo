@@ -53,14 +53,11 @@ exports.doSerialize = function (req, res) {
 
         console.log(typeof(data));
         var dtreeJsonData = JSON.parse(data);
-        //last_saved_time第一个存储不填写，存储default值
-        var nodes = dtreeJsonData.node_array;
-        dtreeToArray(nodes);
+        //参数node_array为树结构，变量node_array为数组结构
+        var node_array = dtreeToArray(dtreeJsonData.node_array);
 
-        //dtreeJsonData.node_array = nodes;
-        //dtreeJsonData.config.last_saved_time = Date.now();
         //向数据库更新部分内容
-        Dtree.update({"_id": dtreeJsonData._id}, {"node_array": nodes, "config.last_saved_time": Date.now()}, function(err){
+        Dtree.update({"_id": dtreeJsonData._id}, {"node_array": node_array, "config.last_saved": Date.now()}, function(err){
                 if(err){
                     res.send({'success':false,'err':err});
                 }else{
@@ -69,19 +66,6 @@ exports.doSerialize = function (req, res) {
                     res.redirect('/');
                 }
         });
-
-        //Dtree.remove({"_id": dtreeJsonData._id}, function(){
-        //    Dtree.create(dtreeJsonData, function(err, dtree, numAffected){
-        //        if(err){
-        //            res.send({'success':false,'err':err});
-        //        }else{
-        //            //res.send({'success':true});
-        //            //console.log("dtree created and saved: " + dtree);
-        //            res.redirect('/');
-        //        }
-        //    });
-        //});
-
     });
 };
 
@@ -112,6 +96,38 @@ exports.deserialize = function (req, res) {
             node_array: node_array,
             nodes: JSON.stringify(nodes)
             //dtree: false
+        });
+    });
+};
+
+exports.pickDtree = function (req, res) {
+    fs.readFile(__dirname + '/../testjson/front_dtree.json', 'utf8', function (err, data) {
+        if (err) throw err;
+
+        console.log(typeof(data));
+        var dtreeJsonData = JSON.parse(data);
+
+        //查询依据
+        var id = new ObjectId('54a4c0947752adcc1764f0d4');
+        console.log(id.toString);
+
+        //参数node_array为树结构，变量node_array为数组结构
+        var node_array = dtreeToArray(dtreeJsonData.node_array);
+
+        dtreeJsonData.node_array = node_array;
+        dtreeJsonData.config.last_saved = Date.now();
+        //挑选需要存入数据库的内容
+        dtreeJsonData = pickDTree(dtreeJsonData);
+       // console.log(dtreeJsonData);
+        //向数据库更新部分内容
+        Dtree.update({"_id": id}, dtreeJsonData, function(err){
+            if(err){
+                res.send({'success':false,'err':err});
+            }else{
+                //res.send({'success':true});
+                //console.log("dtree created and saved: " + dtree);
+                res.redirect('/');
+            }
         });
     });
 };
@@ -232,28 +248,54 @@ var sortNodes = function (nodes) {
 
 /**
  * @function pickDTree
- * @desc 调用underscore库的函数pick，选择要存入数据库的key
+ * @desc 调用underscore库的函数pick，选择要存入数据库的key(调用underscore的API .map .pick)
  * @param {Object DTree} dtree 前端传过来的决策树，已经序列化
  * @return {Object DTree} dtree 与数据库结构一致的决策树数据
  */
 var pickDTree = function (dtree) {
     //node_array部分
+    //node_array有单纯的key，也有object需区分
+    //将node_array中的5个Array进行提取
+    var node_path_array;
+    var redefined_param_array;
+    var tracker_array;
+    var payoff_array;
+    var markov_info;
     for(var i = 0; i < dtree.node_array.length; i++){
+        //node_path_array目前无筛选，没有key进行定位
+        node_path_array = dtree.node_array[i].node_path_array;
+
+        //redefined_param_array筛选
+        redefined_param_array = dtree.node_array[i].redefined_param_array;
+
+        dtree.redefined_param_array = _.map(dtree.redefined_param_array, function(currentObj){
+            return _.pick(currentObj,
+                "param_id",
+                "formula"
+            );
+        });
+
+        //下列三个array目前无筛选，没有key进行定位
+        tracker_array = dtree.node_array[i].tracker_array;
+        payoff_array = dtree.node_array[i].payoff_array;
+        markov_info = dtree.node_array[i].markov_info;
+
         dtree.node_array[i] = _.pick(dtree.node_array[i],
             "node_id",
             "parent_id",
-            "node_path_array",
             "name",
             "tip",
             "type",
-            "markov_info",
-            "show_child",:
+            "show_child",
             "show_tip",
-            "prob",
-            "redefined_param_array",
-            "tracker_array",
-            "payoff_array"
+            "prob"
         );
+
+        dtree.node_array[i].node_path_array = node_path_array;
+        dtree.node_array[i].redefined_param_array = redefined_param_array;
+        dtree.node_array[i].tracker_array = tracker_array;
+        dtree.node_array[i].payoff_array = payoff_array;
+        dtree.node_array[i].markov_info = markov_info;
     }
 
     //其他部分
@@ -264,6 +306,7 @@ var pickDTree = function (dtree) {
         "security_level",
         "layout_style",
         "layer_width",
+        "show_title",
         "show_info",
         "show_param",
         "show_tracker",
@@ -272,31 +315,38 @@ var pickDTree = function (dtree) {
         "align_endArea"
     );
 
-    dtree.param_array = _.pick(dtree.param_array,
-        "param_id",
-        "name",
-        "description",
-        "formula",
-        "category",
-        "display",
-        "comment"
-    );
+    dtree.param_array = _.map(dtree.param_array, function(currentObj){
+        return _.pick(currentObj,
+            "param_id",
+            "name",
+            "description",
+            "formula",
+            "category",
+            "display",
+            "comment"
+        );
+    });
 
-    dtree.param_category_array = _.pick(dtree.param_category_array,
+    dtree.param_category_array = _.map(dtree.param_category_array, function(currentObj){
+        return _.pick(currentObj,
         "category_id",
         "name",
         "description"
-    );
+        );
+    });
 
-    dtree.table_array = _.pick(dtree.table_array,
+    dtree.table_array = _.map(dtree.table_array, function(currentObj){
+        return _.pick(currentObj,
         "table_id",
         "name",
         "description",
         "value",
         "comment"
-    );
+        );
+    });
 
-    dtree.distribution_array = _.pick(dtree.distribution_array,
+    dtree.distribution_array = _.map(dtree.distribution_array, function(currentObj){
+        return _.pick(currentObj,
         "distr_id",
         "name",
         "description",
@@ -304,13 +354,16 @@ var pickDTree = function (dtree) {
         "value",
         "display",
         "comment"
-    );
+        );
+    });
 
-    dtree.payoff_array = _.pick(dtree.payoff_array,
-        "payoff_id",
-        "payoff_name",
-        "payoff_weight"
-    );
+    dtree.payoff_array = _.map(dtree.payoff_array, function(currentObj){
+        return _.pick(currentObj,
+            "payoff_id",
+            "payoff_name",
+            "payoff_weight"
+        );
+    });
 
     return dtree;
 };

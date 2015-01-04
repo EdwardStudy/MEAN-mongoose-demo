@@ -48,6 +48,8 @@ var dtreeSchema = new mongoose.Schema({
 		prob: {type: String}, //节点概率,同求0.125数值表达是否更好
 		redefined_param_array: [{ //该节点上所定义的变量
 			param_id: {type: Number},
+			display: {type: Boolean},
+			name: {type: String},
 			formula: {type: String}
 		}],
 		tracker_array: [ //节点追踪值

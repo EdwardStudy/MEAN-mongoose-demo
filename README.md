@@ -8,11 +8,14 @@ a demo from the book'Mongoose for Application Development'
 a demo of dtree:update json,mongoose schema,subdocs...
 
 usage:
->npm install
->node app
->URL: localhost:3000
+`
+npm install
+node app
+URL: localhost:3000
+`
 
 function:
+
 ![alt](http://edwardsblog.qiniudn.com/image/8/64/f28ccd73b1ed657ac64cef7476199.JPG)
 
 1.click 添加dtree到数据库
@@ -23,6 +26,9 @@ MongoDB->js Object -> write testjson/trees.json
 
 3.click 将node序列化存入数据库
 trees.json->js Object -> update MongoDB
+
+4.click 将fat dtree进行清洗后存入数据库
+front_dtree.json->js Object -> update MongoDB
 
 相关博客文章
 [NodeJS:树的反序列化](http://www.edwardesire.com/nodejs-serialize-dtree/)

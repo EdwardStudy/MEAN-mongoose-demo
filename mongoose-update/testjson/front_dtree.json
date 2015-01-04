@@ -1,0 +1,613 @@
+{
+  "config":      {
+    "name":           "修改后的王二狗的决策树",
+    "description":    "关于今晚干什么的人生重大决定",
+    "security_level": "private",
+    "layout_style":   "white-print",
+
+    "layer_width": [200, 220, 300, 234, 234],
+
+    "show_title":   true,
+    "show_info":    true,
+    "show_param":   true,
+    "show_tracker": true,
+    "show_payoff":  true,
+    "show_tips":    true,
+    "align_endArea":true,
+    "dirty1": 1,
+    "dirty2": "funny"
+  },
+  "param_array": [
+    {
+      "param_id":    1,
+      "name":        "pDate_accepted",
+      "formula":     "40%",
+      "category":    1,
+      "display":     true,
+      "description": "泡妞成功的可能性",
+      "comment":     "很有可能"
+    },
+    {
+      "param_id":    2,
+      "name":        "pHave_time",
+      "formula":     "",
+      "category":    1,
+      "display":     true,
+      "description": "probability that buddies have time",
+      "comment":     "很有可能"
+    },
+    {
+      "param_id":    3,
+      "name":        "weekdays",
+      "formula":     "1",
+      "category":    null,
+      "display":     true,
+      "description": "whether today is a weekday",
+      "comment":     "‘1’ means weekday; ‘0’ means weekend"
+    },
+    {
+      "param_id":    4,
+      "name":        "pDota",
+      "formula":     "40%",
+      "category":    1,
+      "display":     true,
+      "description": "probability of playing DOTA",
+      "comment":     ""
+    },
+    {
+      "param_id":    5,
+      "name":        "pDrink",
+      "formula":     "1-pDota",
+      "category":    1,
+      "display":     true,
+      "description": "",
+      "comment":     ""
+    },
+    {
+      "param_id":    6,
+      "name":        "cTaxi",
+      "formula":     "100",
+      "category":    2,
+      "display":     true,
+      "description": "cost of Taxi, depending on where you go",
+      "comment":     ""
+    },
+    {
+      "param_id":    7,
+      "name":        "cBag",
+      "formula":     "discount(2000; 2; disc_rate)",
+      "category":    2,
+      "display":     true,
+      "description": "cost of designer bag",
+      "comment":     ""
+    },
+    {
+      "param_id":    8,
+      "name":        "cMovie",
+      "formula":     "80",
+      "category":    2,
+      "display":     false,
+      "description": "cost of watching movie",
+      "comment":     ""
+    },
+    {
+      "param_id":    9,
+      "name":        "uMovie",
+      "formula":     "9",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl of watching movie",
+      "comment":     ""
+    },
+    {
+      "param_id":    10,
+      "name":        "cKaraoke",
+      "formula":     "300",
+      "category":    2,
+      "display":     true,
+      "description": "cost of Karaoke",
+      "comment":     ""
+    },
+    {
+      "param_id":    11,
+      "name":        "uKaraoke",
+      "formula":     "10",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl of karaoke",
+      "comment":     ""
+    },
+    {
+      "param_id":    12,
+      "name":        "uBag_bought",
+      "formula":     "Dis_uBag_bought*10",
+      "category":    2,
+      "display":     true,
+      "description": "happiness lvl of buying a bag",
+      "comment":     "uncertain: follow a beta distribution"
+    },
+    {
+      "param_id":    13,
+      "name":        "uBag_not_bought",
+      "formula":     "10",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl of not buying a bag",
+      "comment":     ""
+    },
+    {
+      "param_id":    14,
+      "name":        "uDate_rejected",
+      "formula":     "3",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl if date is rejected",
+      "comment":     ""
+    },
+    {
+      "param_id":    15,
+      "name":        "uBuddy_no_time",
+      "formula":     "4",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl if buddies does not have time",
+      "comment":     ""
+    },
+    {
+      "param_id":    16,
+      "name":        "cNet_cafe",
+      "formula":     "cPer_hour_rate*hours",
+      "category":    2,
+      "display":     true,
+      "description": "cost of net cafe",
+      "comment":     ""
+    },
+    {
+      "param_id":    17,
+      "name":        "uDota",
+      "formula":     "7",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl of palying dota",
+      "comment":     ""
+    },
+    {
+      "param_id":    18,
+      "name":        "cWine",
+      "formula":     "cFood_and_drink[1,2]",
+      "category":    2,
+      "display":     true,
+      "description": "cost of wine",
+      "comment":     ""
+    },
+    {
+      "param_id":    19,
+      "name":        "cFood",
+      "formula":     "cFood_and_drink[1,1]",
+      "category":    2,
+      "display":     true,
+      "description": "cost of food",
+      "comment":     ""
+    },
+    {
+      "param_id":    20,
+      "name":        "uDrink",
+      "formula":     "8",
+      "category":    3,
+      "display":     true,
+      "description": "happiness lvl of drinking wine",
+      "comment":     ""
+    },
+    {
+      "param_id":    21,
+      "name":        "hours",
+      "formula":     "5",
+      "category":    null,
+      "display":     true,
+      "description": "hours of playing DOTA",
+      "comment":     ""
+    },
+    {
+      "param_id":    22,
+      "name":        "cPer_hour_rate",
+      "formula":     "6",
+      "category":    3,
+      "display":     true,
+      "description": "per hour cost of Dota",
+      "comment":     ""
+    },
+    {
+      "param_id":    22,
+      "name":        "disc_rate",
+      "formula":     "3%",
+      "category":    null,
+      "display":     true,
+      "description": "yearly discount rate for bags",
+      "comment":     ""
+    }
+
+  ],
+
+  "param_category_array": [
+    {
+      "category_id": 1,
+      "name":        "probability",
+      "description": "发生概率"
+    },
+    {
+      "category_id": 2,
+      "name":        "cost",
+      "description": "代价"
+    },
+    {
+      "category_id": 3,
+      "name":        "happiness",
+      "description": "幸福指数"
+    }
+  ],
+
+  "table_array": [
+    {
+      "table_id":    1,
+      "name":        "cFood_and_drink",
+      "value":       [[100, 300], [200,400]],
+      "display":     true,
+      "description": "cost table for food and drink",
+      "comment":     ""
+    }
+  ],
+
+  "distribution_array": [
+    {
+      "distr_id":    1,
+      "name":        "Dis_uBag_bought",
+      "type":        "beta",
+      "value":       [8,4],
+      "display":     true,
+      "description": "Distribution of happiness lvl for buying a bag",
+      "comment":     ""
+    }
+  ],
+
+  "node_array": {
+    "node_id": 1,
+    "parent_id": null,
+    "name": "what to do tonight",
+    "tip": "",
+    "type": "decision",
+    "show_child": true,
+    "show_tip": true,
+    "prob": "",
+    "payoff_array": [],
+    "tracker_array": [],
+    "redefined_param_array": [],
+    "markov_info": [],
+    "node_path_array": [],
+    "dirty3": "Saysomething",
+    "children": [
+      {
+        "node_id": 2,
+        "parent_id": 1,
+        "name": "Date a girl",
+        "tip": "找女伴玩去",
+        "type": "change",
+        "show_child": true,
+        "show_tip": true,
+        "prob": "",
+        "payoff_array": [],
+        "tracker_array": [],
+        "redefined_param_array": [],
+        "markov_info": [],
+        "node_path_array": [1],
+        "children": [
+          {
+            "node_id": 4,
+            "parent_id": 2,
+            "name": "Date accepted",
+            "tip": "",
+            "type": "change",
+            "show_child": true,
+            "show_tip": true,
+            "prob": "pDate_accepted",
+            "payoff_array": [],
+            "tracker_array": [],
+            "redefined_param_array": [],
+            "markov_info": [],
+            "node_path_array": [
+              1,
+              2
+            ],
+            "children": [
+              {
+                "node_id": 8,
+                "parent_id": 4,
+                "name": "Shopping",
+                "tip": "",
+                "type": "change",
+                "show_child": true,
+                "show_tip": true,
+                "prob": "20%",
+                "payoff_array": [],
+                "tracker_array": [],
+                "redefined_param_array": [
+                  {
+                    "param_id": 6,
+                    "formula": "200"
+                  }
+                ],
+                "markov_info": null,
+                "node_path_array": [
+                  1,
+                  2,
+                  4
+                ],
+                "children": [
+                  {
+                    "node_id": 13,
+                    "parent_id": 8,
+                    "name": "Buy Designer bag",
+                    "tip": "奥拉奥拉奥拉奥拉",
+                    "type": "terminal",
+                    "show_child": true,
+                    "show_tip": true,
+                    "prob": "10%",
+                    "payoff_array": [
+                      "cTaxi+cBag",
+                      "uBag_bought"
+                    ],
+                    "tracker_array": [],
+                    "redefined_param_array": [],
+                    "markov_info": null,
+                    "node_path_array": [
+                      1,
+                      2,
+                      4,
+                      8
+                    ],
+                    "children": [],
+                    "_children": []
+                  },
+                  {
+                    "node_id": 14,
+                    "parent_id": 8,
+                    "name": "No purchase",
+                    "tip": "",
+                    "type": "terminal",
+                    "show_child": true,
+                    "show_tip": true,
+                    "prob": "#",
+                    "payoff_array": [
+                      "cTaxi+cBag",
+                      "uBag_not_bought"
+                    ],
+                    "tracker_array": [],
+                    "redefined_param_array": [],
+                    "markov_info": null,
+                    "node_path_array": [
+                      1,
+                      2,
+                      4,
+                      8
+                    ],
+                    "children": [],
+                    "_children": []
+                  }
+                ],
+                "_children": []
+              },
+              {
+                "node_id": 9,
+                "parent_id": 4,
+                "name": "Karaoke",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "show_tip": true,
+                "prob": "30%",
+                "payoff_array": [
+                  "cTaxi+cKaraoke",
+                  "uKaraoke"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [],
+                "markov_info": null,
+                "node_path_array": [
+                  1,
+                  2,
+                  4
+                ],
+                "children": [],
+                "_children": []
+              },
+              {
+                "node_id": 10,
+                "parent_id": 4,
+                "name": "Movie",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "show_tip": true,
+                "prob": "50%",
+                "payoff_array": [
+                  "cTaxi+cMovie",
+                  "uMovie"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [
+                  {
+                    "param_id": 6,
+                    "formula": "30"
+                  }
+                ],
+                "markov_info": null,
+                "node_path_array": [
+                  1,
+                  2,
+                  4
+                ],
+                "children": [],
+                "_children": []
+              }
+            ],
+            "_children": []
+          },
+          {
+            "node_id": 5,
+            "parent_id": 2,
+            "name": "Date rejected",
+            "tip": "",
+            "type": "terminal",
+            "show_child": true,
+            "show_tip": true,
+            "prob": "#",
+            "payoff_array": [
+              "0",
+              "uDate_rejected"
+            ],
+            "tracker_array": [],
+            "redefined_param_array": [],
+            "markov_info": null,
+            "node_path_array": [
+              1,
+              2
+            ],
+            "children": [],
+            "_children": []
+          }
+        ],
+        "_children": []
+      },
+      {
+        "node_id": 3,
+        "parent_id": 1,
+        "name": "Hang out with buddies",
+        "tip": "",
+        "type": "change",
+        "show_child": true,
+        "show_tip": true,
+        "prob": "",
+        "payoff_array": [],
+        "tracker_array": [],
+        "redefined_param_array": [],
+        "markov_info": null,
+        "node_path_array": [1],
+        "children": [
+          {
+            "node_id": 6,
+            "parent_id": 3,
+            "name": "Buddies have time",
+            "tip": "",
+            "type": "change",
+            "show_child": true,
+            "show_tip": true,
+            "prob": "pHave_time",
+            "payoff_array": [],
+            "tracker_array": [],
+            "redefined_param_array": [
+              {
+                "param_id": 2,
+                "formula": "if(weekdays=1; 30%; 40%)"
+              }
+            ],
+            "markov_info": null,
+            "node_path_array": [
+              1,
+              3
+            ],
+            "children": [
+              {
+                "node_id": 11,
+                "parent_id": 6,
+                "name": "DOTA",
+                "tip": "",
+                "type": "terminal",
+                "show_child": true,
+                "show_tip": true,
+                "prob": "pDota",
+                "payoff_array": [
+                  "cNet_cafe",
+                  "uDota"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [],
+                "markov_info": null,
+                "node_path_array": [
+                  1,
+                  3,
+                  6
+                ],
+                "children": [],
+                "_children": []
+              },
+              {
+                "node_id": 12,
+                "parent_id": 6,
+                "name": "Drink",
+                "tip": "out for a drink lalala",
+                "type": "terminal",
+                "show_child": true,
+                "show_tip": true,
+                "prob": "pDrink",
+                "payoff_array": [
+                  "cTaxi+cFood+cWine",
+                  "uDrink"
+                ],
+                "tracker_array": [],
+                "redefined_param_array": [],
+                "markov_info": null,
+                "node_path_array": [
+                  1,
+                  3,
+                  6
+                ],
+                "children": [],
+                "_children": []
+              }
+            ],
+            "_children": []
+          },
+          {
+            "node_id": 7,
+            "parent_id": 3,
+            "name": "Buddies have no time",
+            "tip": "",
+            "type": "terminal",
+            "show_child": true,
+            "show_tip": true,
+            "prob": "#",
+            "payoff_array": [
+              "0",
+              "uBuddy_no_time"
+            ],
+            "tracker_array": [],
+            "redefined_param_array": [],
+            "markov_info": null,
+            "node_path_array": [
+              1,
+              3
+            ],
+            "children": [],
+            "_children": []
+          }
+        ],
+        "_children": []
+      }
+    ],
+    "_children": []
+  },
+
+  "payoff_array": [
+    {
+      "payoff_id": 1,
+      "name": "cost",
+      "weight": 1,
+      "description" : ""
+    },
+    {
+      "payoff_id": 2,
+      "name": "happiness",
+      "weight": 1000,
+      "description" : ""
+    }
+  ]
+}
